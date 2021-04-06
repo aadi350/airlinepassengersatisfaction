@@ -1,0 +1,86 @@
+---
+title: "Emotion Classification"
+author: "Aadidev Sooknanan"
+output: 
+  html_document:
+    toc: TRUE
+---
+
+## Initial Import
+CSV file is read and unncessary columns dropped
+```{r}
+library(tidytext)
+library(text2vec)
+
+df = read.csv("labels.csv")
+drop <-c("X", "image_name", "text_ocr")
+df = df[!(names(df) %in% drop)]
+df
+```
+```{r}
+prep_function = tolower
+tokenizer = word_tokenizer
+
+train_iter = itoken(df$text_corrected,
+                    preprocessor = prep_function,
+                    tokenizer=tokenizer,
+                    progressbar = TRUE)
+vocab = create_vocabulary(train_iter)
+```
+
+
+```{r}
+vectorizer = vocab_vectorizer(vocab)
+tfidf_matrix = create_dtm(train_iter, vectorizer)
+```
+Getting unique values from all categorical columns
+Firstly overall-sentiment
+```{r}
+library(CatEncoders)
+
+overall_sentiment <- unique(unlist(df$overall_sentiment))
+overall_encoder = LabelEncoder.fit(overall_sentiment)
+
+df$overall_sentiment_encoded = transform(overall_encoder, df$overall_sentiment)
+```
+Humour
+```{r}
+humour <- unique(unlist(df$humour))
+humour_encoder = LabelEncoder.fit(humour)
+
+df$humour_encoded = transform(humour_encoder, df$humour)
+```
+Sarcasm
+```{r}
+sarcasm <- unique(unlist(df$sarcasm))
+sarcasm_encoder = LabelEncoder.fit(humour)
+
+df$humour_encoded = transform(sarcasm_encoder, df$humour)
+```
+Offensive
+```{r}
+offensive <- unique(unlist(df$offensive))
+offensive_encoder = LabelEncoder.fit(offensive)
+
+df$offensive_encoded = transform(offensive_encoder, df$offensive)
+```
+Motivational
+```{r}
+motivational <- unique(unlist(df$motivational))
+motivational_encoder = LabelEncoder.fit(motivational)
+
+df$motivational_encoded = transform(motivational_encoder, df$motivational)
+```
+```{r}
+tfidf_matrix
+```
+
+
+## Fitting Model
+```{r}
+library(glmnet)
+
+NFOLDS = 10
+clf = cv.glmnet(x=tfidf_matrix, y=df[['overall_sentiment_encoded']])
+```
+
