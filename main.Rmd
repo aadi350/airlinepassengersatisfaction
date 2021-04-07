@@ -1,0 +1,48 @@
+---
+title: "Airline Passenger Satisfaction"
+output: html_notebook
+---
+
+```{r}
+df <- read.csv('train.csv')
+head(df)
+```
+```{r}
+labels = subset(df, select="satisfaction")
+unique(labels)
+```
+Unnecessary columns are removed (X and id do not contribute meaningful information)
+```{r}
+df <- subset(df, select=-c(X, id))
+```
+```{r}
+names(df)
+```
+
+
+
+The non-numerical (categorical) columns need be encoded in order for logistic regression to be carried out. The CatEncoders package from CRAN is used to do this on all non-numeric columns, and both X and id are droped from the dataframe
+```{r}
+df = subset(df, select= -c(satisfaction))
+```
+
+```{r}
+cols <- c("Gender", "Customer.Type", "Type.of.Travel", "Class")
+df_enc = df
+
+gender_enc = LabelEncoder.fit(c(df$Gender))
+df_enc$Gender = transform(gender_enc, c(df$Gender))
+
+ctype_enc = LabelEncoder.fit(c(df$Customer.Type))
+df_enc$Customer.Type = transform(ctype_enc, c(df$Customer.Type))
+
+ttype_enc = LabelEncoder.fit(c(df$Type.of.Travel))
+df_enc$Type.of.Travel = transform(ttype_enc, c(df$Type.of.Travel))
+
+class_enc = LabelEncoder.fit(c(df$Class))
+df_enc$Class = transform(class_enc, c(df$Class))
+
+head(df_enc)
+
+```
+
