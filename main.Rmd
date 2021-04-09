@@ -29,6 +29,10 @@ str(df)
 ```{r}
 str(df)
 ```
+```{r}
+min(df$Flight.Distance)
+```
+
 Following numeric encoding, R expects variables to be of type factor for Logistic Regression to be performed, this is done next. From the output that follows, the dataframe was successfully converted into levels with no NAs introduced by coercion errors throwh
 
 ```{r}
