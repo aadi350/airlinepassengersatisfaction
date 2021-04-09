@@ -1,48 +1,169 @@
 ---
 title: "Airline Passenger Satisfaction"
-output: html_notebook
+output:
+  html_notebook
 ---
+## Loading and Preprocessing
+
+Firstly, the CSV file is loaded into a variable called df, and the first few rows are previewed using the head function
 
 ```{r}
-df <- read.csv('train.csv')
+library("knitr")
+
+df <- read.csv('data/train.csv')
+df <- df[complete.cases(df), ]
 head(df)
 ```
+After viewing the above, the parameter to be predicted is the level of passenger satisfaction. All discrete values (or levels) are found below
 ```{r}
 labels = subset(df, select="satisfaction")
 unique(labels)
 ```
-Unnecessary columns are removed (X and id do not contribute meaningful information)
+
+Unnecessary columns are removed, from the above, X and id do not seem to contribute meaningful information to the dataset, and are subsequently pruned, we further explore the structure of data in order to get a better idea of datatypes and valuees
+
 ```{r}
 df <- subset(df, select=-c(X, id))
+str(df)
 ```
 ```{r}
-names(df)
+str(df)
 ```
-
-
-
-The non-numerical (categorical) columns need be encoded in order for logistic regression to be carried out. The CatEncoders package from CRAN is used to do this on all non-numeric columns, and both X and id are droped from the dataframe
+Following numeric conversion, R expects variables to be of type factor for Logistic Regression to be performed, this is done next. From the output that follows, the dataframe was successfully converted into levels 
 ```{r}
-df = subset(df, select= -c(satisfaction))
-```
-
-```{r}
-cols <- c("Gender", "Customer.Type", "Type.of.Travel", "Class")
 df_enc = df
 
-gender_enc = LabelEncoder.fit(c(df$Gender))
-df_enc$Gender = transform(gender_enc, c(df$Gender))
+df_enc$Gender = as.numeric(factor(df_enc$Gender))
+df_enc$Customer.Type = as.numeric(factor(df_enc$Customer.Type))
+df_enc$Age = as.numeric(factor(df_enc$Age))
+df_enc$Type.of.Travel = as.numeric(factor(df_enc$Type.of.Travel))
+df_enc$Class = as.numeric(factor(df_enc$Class))
+df_enc$Flight.Distance =as.numeric(factor(df_enc$Flight.Distance))
+df_enc$Inflight.wifi.service = as.numeric(factor(df_enc$Inflight.wifi.service))
+df_enc$Departure.Arrival.time.convenient = as.numeric(factor(df_enc$Departure.Arrival.time.convenient))
+df_enc$Ease.of.Online.booking = as.numeric(factor(df_enc$Ease.of.Online.booking))
+df_enc$Gate.location = as.numeric(factor(df_enc$Gate.location))
+df_enc$Food.and.drink = as.numeric(factor(df_enc$Food.and.drink))
+df_enc$Online.boarding = as.numeric(factor(df_enc$Online.boarding))
+df_enc$Inflight.entertainment = as.numeric(factor(df_enc$Inflight.entertainment))
+df_enc$On.board.service = as.numeric(factor(df_enc$On.board.service))
+df_enc$Leg.room.service = as.numeric(factor(df_enc$Leg.room.service))
+df_enc$Baggage.handling = as.numeric(factor(df_enc$Baggage.handling))
+df_enc$Checkin.service = as.numeric(factor(df_enc$Checkin.service))
+df_enc$Inflight.service = as.numeric(factor(df_enc$Inflight.service))
+df_enc$Cleanliness = as.numeric(factor(df_enc$Cleanliness))
+df_enc$Departure.Delay.in.Minutes = as.numeric(factor(df_enc$Departure.Delay.in.Minutes))
+df_enc$Arrival.Delay.in.Minutes = as.numeric(factor(df_enc$Arrival.Delay.in.Minutes))
 
-ctype_enc = LabelEncoder.fit(c(df$Customer.Type))
-df_enc$Customer.Type = transform(ctype_enc, c(df$Customer.Type))
+df_enc$satisfaction <- ifelse(test=df_enc$satisfaction == 'satisfied', yes=1, no=0)
 
-ttype_enc = LabelEncoder.fit(c(df$Type.of.Travel))
-df_enc$Type.of.Travel = transform(ttype_enc, c(df$Type.of.Travel))
+str(df_enc)
 
-class_enc = LabelEncoder.fit(c(df$Class))
-df_enc$Class = transform(class_enc, c(df$Class))
+```
+## Correlation Analysis
 
-head(df_enc)
+Correlation analysis is performed to determine pairwise correlations within the dataset. Since we are concerned mainly with linear relations, the Pearson correlation coefficient is used in order to determine the extent of correlation amongst the attributes, this is visualised using a correlation heatmap below
 
+```{r}
+library(reshape2)
+library(ggplot2)
+
+cor_matrix <- cor(df_enc)
+cor_matrix[lower.tri(cor_matrix)]<- NA
+cor_matrix_melted <- melt(cor_matrix, na.rm = TRUE)
+
+
+ggplot(data = cor_matrix_melted, aes(Var2, Var1, fill = value))+
+ geom_tile(color = "white")+
+ scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+   midpoint = 0, limit = c(-1,1), space = "Lab", 
+   name="Pearson\nCorrelation") +
+  theme_minimal()+ 
+ theme(axis.text.x = element_text(angle = 90, vjust = 1, 
+    size = 10, hjust = 1))+
+ coord_fixed()
+```
+## Logistic GLM
+
+Now the logit-model shall be built using the GLM syntax, with summary being called to display t-values, P-values estimated coefficients and the associated errors
+
+Going through the coefficents that follow,the only factors which were not significantly correlated to satisfaction was flight distance. It seemed that all other factors exhibited some level of linear correlation with the response variable. However, a high level of significance does not alone make an attribute statistically 'interesting'. Following the levels of estimated correlation, the attributes with the highest coefficients are as follows (in descending magnitude of estimated coefficient):
+
+### Explanation of Coefficients
+
+Attribute | Comments
+----------------|--------------
+Gender | Positively correlated, which may imply that male customers are overally more satisfied
+Customer.Type | positively correlated, this implies that loyal customers may be overally more satisfied with their flight
+Class | Negative correlation may indicate that customers in upper classes may be more satisfied with the     airline's service
+Inflight.wifi.service | the positive coefficient here may indicate that having inflight wifi may have a poistive effect on customer satisfcation
+Online.boarding | The positive coefficient indicates that having the option for online boarding  pre-flight may increase passenger satisfaction
+Checkin.service | Similar to the above, the quality of checkin-service may positvely correlate to passenger satisfaction
+Leg.room.service | the amount of leg-room available also was positively correlated to passenger satisfaction, this may translate to passengers being overally more satisfied with more legroom
+Cleanliness | the level of (subjective) cleanliness was found to also positively impact a passenger's satisfaction with their flight experience
+On.board.service | similar to leg-room service, the quality of service (presumably from flight-attendance during the flight) was found to positively influence passenger satisfaction
+Ease.of.Online.booking | this was found to negatively correlate with passenger satisfaction
+Baggage.handling | the quality of baggage handling was also found to positively impact passenger satisfaction levels
+Departure.Arrival.time.convenient | strangely, the convenience of arrival time was found to negatively correlate with passenger satisfaction, this may proove an interesting area of research
+Inflight.service | Finally, the quality of inflight service (media, etc) was found to positively impact a passenger's level of satisfaction on a flight
+ 
+
+```{r}
+logmodel <- glm(
+  satisfaction ~ ., family = binomial, data =  df_enc
+)
+summary(logmodel)
+```
+## Wald Test
+### Confidence Intervals
+Confidence interval for betas, the Wald test is carried out to determine the 90% confidence interval and crticial values
+```{r}
+confint(logmodel, level = 0.95)
+```
+### Confidence Intervals for Odds Ratio
+```{r}
+exp(confint(logmodel, level = 0.95))
+```
+## LRT Test
+### LRT with Null Model
+
+The likelihood ratio tests $H_{0}$: reduced model vs $H_{1}$: full model. Since the difference between log-likelihood statistics for two models (one of which is a special case of the other) follows an approximate $chi^{2}$ distribution, we can find the $chi^{2}$ test statistic for a full vs reduced (some paramters set to zero). The degrees-of-freedom are the number of parameters set to zero in the reduced model. The null hypotheses being tested, in essence, are that the subset of parameters set to zero are actually non-significant for the purposes of estimating the level of passenger satisfaction.
+
+From the results of the LRT, it is shown that level of satisfaction is statistically (significantly) correlated to the attributes present in the full model, hence the null hypothesis (all attributes coefficients are zero) was disproven
+
+```{r}
+nullmodel <-  glm(formula = satisfaction ~ 1, family = binomial, data = df_enc)
+lrtest(nullmodel, logmodel)
+```
+### LRT Test with Reduced Model
+From the following LRT using only the most significant parameters above. From the results below, we can see that the the level of significance is near zero (however the $chi^{2}$ statistic shows that the difference in less extreme) Hence the $\beta s$ for the attributes omitted are shown to be non-zero
+```{r}
+library(lmtest)
+
+logmodel.reduced <- glm(satisfaction ~ Type.of.Travel + Customer.Type + Class + Inflight.wifi.service + Departure.Arrival.time.convenient + Ease.of.Online.booking + Online.boarding + On.board.service + Leg.room.service + Baggage.handling + Checkin.service + Inflight.service + Cleanliness, family=binomial, data=df_enc)
+lrtest(logmodel.reduced,  logmodel)
+
+Data Description
+Model Building
+Conclusion
+Application of Model
+
+```
+
+## Testing for Adequacy ($R^{2}$)
+The standard *goodness-of-fit* statistic for OLS regression $R^{2}$ (also called the coefficient of determination). The higher this value, the better the **fit** of the model. $R^{2}$ is defined as:
+$$
+  R^{2} = \frac{\text{Total Sum of Squares} - \text{Residual Sum of Squares}}{\text{Total Sum of Squares}}
+$$
+However, $R^{2}$ is not appropriate for use with the logistic model, since it does not inform about the variability accounted for in the model, nor does it provide information to decide between models. Hence, a pseudo-$R^{2}$ variation is used. From the resulting value, it is seen that the model is borderline adequate
+```{r}
+require(rms)
+
+ll.null <- logmodel$null.deviance/-2
+ll.proposed <- logmodel$deviance/-2
+
+r_squared <- (ll.null - ll.proposed) / ll.null
+
+r_squared
 ```
 
