@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- SEO -->
+    <title>WebSlides: Making HTML presentations easy</title>
+    <meta name="description" content="WebSlides is the easiest way to make HTML presentations, portfolios, and landings. Just essential features.">
+
+    <!-- URL CANONICAL -->
+    <!-- <link rel="canonical" href="http://your-url.com/"> -->
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i%7CMaitree:200,300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+
+    <!-- CSS WebSlides -->
+    <link rel="stylesheet" type='text/css' media='all' href="static/css/webslides.css">
+
+    <!-- Optional - CSS SVG Icons (Font Awesome) -->
+    <link rel="stylesheet" type='text/css' media='all' href="static/css/svg-icons.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Foundation Components -->
+    <!-- Compressed CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+
+    <!-- Compressed JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+    <!-- Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#333333">
+
+  </head>
+  <body>
+    <header role="banner">
+      <nav role="navigation">
+        <p class="logo"><a href="index.html" title="WebSlides">WebSlides</a></p>
+        <ul>
+          <li class="github">
+            <a rel="external" href="https://github.com/webslides/webslides" title="Github">
+              <svg class="fa-github">
+                <use xlink:href="#fa-github"></use>
+              </svg>
+              <em>WebSlides</em>
+            </a>
+          </li>
+          <li class="twitter">
+            <a rel="external" href="https://twitter.com/webslides" title="Twitter">
+              <svg class="fa-twitter">
+                <use xlink:href="#fa-twitter"></use>
+              </svg>
+              <em>@WebSlides</em>
+            </a>
+          </li>
+          <!--  <li class="dribbble"><a rel="external" href="http://dribbble.com/webslides" title="Dribbble"><svg class="fa-dribbble"><use xlink:href="#fa-dribbble"></use></svg> <em>webslides</em></a></li> -->
+        </ul>
+      </nav>
+    </header>
+
+    <main role="main">
+      <article id="webslides" class="vertical">
+        <!-- Quick Guide
+          - Each parent <section> in the <article id="webslides"> element is an individual slide.
+          - Vertical sliding = <article id="webslides" class="vertical">
+          - <div class="wrap"> = container 90% / <div class="wrap size-50"> = 45%;
+        -->
+        <section>
+          <div class="content-center">
+            <div class="grid">
+              <div class="column">
+                <img class="fadeIn" style="margin: 30px" src="static/images/emojis/happy.png" />
+                <p style="font-size: 25px; margin-top: -30px">Satisfied</p>
+              </div>
+              <div class="column">
+                <img class="fadeIn" style="margin: 30px" src="static/images/emojis/angry.png" />
+                <p style="font-size: 25px; margin-top: -30px">Neutral or Dissatisfied</p>
+              </div>
+               
+            </div>       
+          </div>
+        </section>
+
+        <section>
+          <div class="grid" style="margin-top: -50px;">
+            <div class="column" style="align-items: center;">
+              <img src="static/images/attributeicons/gender.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Gender</span>
+              <img src="static/images/attributeicons/age.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Age</span>
+              <img src="static/images/attributeicons/loyalty.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Customer Type</span>
+              <img src="static/images/attributeicons/typeoftravel.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Type of Travel</span>
+              <img src="static/images/attributeicons/class.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Class</span>
+      
+            </div>
+            <div class="column" style="align-items: center;">
+              <img src="static/images/attributeicons/distance.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Flight Distance</span>
+              <img src="static/images/attributeicons/wifi.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">WiFi</span>
+              <img src="static/images/attributeicons/timeconvenient.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Departure Time</span>
+              <img src="static/images/attributeicons/easeofonlinebooking.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Online Booking</span>
+              <img src="static/images/attributeicons/gatelocation.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Gate Location</span>
+      
+            </div>
+            <div class="column" style="align-items: center;">
+              <img src="static/images/attributeicons/food.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Food</span>
+              <img src="static/images/attributeicons/onlineboarding.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Online Boarding</span>
+              <img src="static/images/attributeicons/seatcomfor.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Seat Comfort</span>
+              <img src="static/images/attributeicons/entertainment.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Inflight Entertainment</span>
+              <img src="static/images/attributeicons/onboardservice.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Onboard Service</span>
+      
+            </div>
+            <div class="column" style="align-items: center;">
+              <img src="static/images/attributeicons/legroom.png" style="width:75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Legroom</span>
+              <img src="static/images/attributeicons/baggage.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Baggage Handling</span>
+              <img src="static/images/attributeicons/checkinservice.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Checkin Service</span>
+              <img src="static/images/attributeicons/cleanliness.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Cleanliness</span>
+              <img src="static/images/attributeicons/deparrivaldelay.png" style="width: 75px; margin-top: 25px"/>
+              <span style="font-size:12px; margin-top:2px; width: 100%;text-align: center">Delays</span>
+      
+            </div>
+
+          </div>
+          
+        </section>
+
+        <section>
+          <div class="grid">
+            <div class="column" style="align-items: center">
+              <img src="static/images/attributeicons/gender.png"  style="width:150px; margin-top: 25px">
+              <span style="font-size:25px; margin-top:2px; width: 100%;text-align: center">Gender</span>
+            </div>
+            <div class="column" style="align-items: center">
+              <img src="static/images/attributeicons/loyalty.png"  style="width:150px; margin-top: 25px">
+              <span style="font-size:25px; margin-top:2px; width: 100%;text-align: center">Customer Type</span>
+            </div>
+            <div class="column" style="align-items: center">
+              <img src="static/images/attributeicons/typeoftravel.png"  style="width:150px; margin-top: 25px">
+              <span style="font-size:25px; margin-top:2px; width: 100%;text-align: center">Type of Travel</span>
+            </div>
+            <div class="column" style="align-items: center">
+              <img src="static/images/attributeicons/class.png"  style="width:150px; margin-top: 25px">
+              <span style="font-size:25px; margin-top:2px; width: 100%;text-align: center">Class</span>
+            </div>
+          
+          </div>
+        </section>
+          
+
+        <section>
+          <div class="wrap">
+            <h2>Categorical Encoding</h2>
+            
+            <ul class="flexblock clients">
+              <li>
+                <a href="#" title="Categorical Encoding">
+                  <figure>
+                    <img src="../static/images/gender/male.png" style="height: 350px" alt="male">
+                    <figcaption>
+                      <h3>Male: 0</h3>
+                      
+                    </figcaption>
+                  </figure>
+                </a>
+              </li>
+              <li>
+                <a href="#" title="Client">
+                  <figure>
+                    <img src="../static/images/gender/female.png" style="height: 350px" alt="female">
+                    <figcaption>
+                      <h3>Female: 1</h3>
+                     
+                    </figcaption>
+                  </figure>
+                </a>
+              </li>
+              </ul>
+        </section>
+        <section>
+          <h2>Categorical Encoding in R</h2>
+          <p><code>
+            data$Gender = as.numeric(factor(data$Gender, levels = c("Male","Female"), 
+                labels = c(0, 1)))
+          </code></p>
+        </section>
+        <section>
+          <!--.wrap = container (width: 90%) -->
+          <div class="wrap size-50 aligncenter">
+            <h2><strong>Why WebSlides?</strong></h2>
+            <p class="text-intro"><a href="demos/why-webslides.html" title="Why WebSlides?">Presentations</a>, <a href="demos/landings.html" title="Landings">landings</a>, <a href="demos/portfolios.html" title="Portfolios">portfolios</a>, and <a href="demos/longforms.html" title="Longforms">longforms</a>.</p>
+            <div class="bg-white shadow">
+              <ul class="flexblock reasons">
+                <li>
+                  <h2>An opportunity to engage.</h2>
+                  <p>WebSlides is about good karma. This is about telling the story, and sharing it in a beautiful way. HTML and CSS as narrative elements.</p>
+                </li>
+                <li>
+                  <h2>Work better, faster.</h2>
+                  <p>Designers, marketers, and journalists can now focus on the content. Simply <a href="demos/index.html" title="WebSlides Demos">choose a demo</a> and customize it in minutes.</p>
+                </li>
+              </ul>
+            </div>
+            <!-- .end .bg-white shadow -->
+          </div>
+          <!-- .end .wrap -->
+        </section>
+        <section>
+          <!--.wrap = container (width: 90%) -->
+          <div class="wrap">
+            <div class="grid vertical-align">
+              <div class="column">
+                <h3><strong>WebSlides is really easy</strong></h3>
+                <p class="text-intro">Each parent <code>&lt;section&gt;</code> in the #webslides element is an individual slide. </p>
+                <p>Code is clean and scalable. It uses <strong>intuitive markup</strong> with popular naming conventions. There's no need to overuse classes or nesting. <strong>Making an HTML presentation has never been so fast</strong>.</p>
+              </div>
+              <!-- .end .column -->
+              <div class="column">
+                <pre>&lt;article id="webslides"&gt;
+  <span class="code-comment">&lt;!-- Slide 1 --&gt;</span>
+  &lt;section&gt;
+    &lt;h1&gt;Design for trust&lt;/h1&gt;
+  &lt;/section&gt;
+  <span class="code-comment">&lt;!-- Slide 2 --&gt;</span>
+  &lt;section class="bg-primary"&gt;
+    &lt;div class="wrap"&gt;
+      &lt;h2&gt;.wrap = container (width: 90%)&lt;/h2&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/article&gt;
+</pre>
+              </div>
+              <!-- .end .column -->
+            </div>
+            <!-- .end .grid -->
+          </div>
+          <!-- .end .wrap -->
+        </section>
+        <section>
+          <div class="wrap">
+            <h2>Features</h2>
+            <ul class="flexblock features">
+              <li>
+                <div>
+                  <h2>
+                    <span>&rarr;</span>
+                    Simple Navigation
+                  </h2>
+                  with arrow keys, presenter...
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h2>
+                    <svg class="fa-link">
+                      <use xlink:href="#fa-link"></use>
+                    </svg>
+                    Permalinks
+                  </h2>
+                  Go to a specific slide.
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h2>
+                    <svg class="fa-clock-o">
+                      <use xlink:href="#fa-clock-o"></use>
+                    </svg>
+                    Slide Counter
+                  </h2>
+                  Current/Total number.
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h2>
+                    <span>40<sup>+</sup></span>
+                    Beautiful Components
+                  </h2>
+                  Covers, cards, quotes...
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h2>
+                    <svg class="fa-text-height">
+                      <use xlink:href="#fa-text-height"></use>
+                    </svg>
+                    Vertical Rhythm
+                  </h2>
+                  Use multiples of 8.
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h2>
+                    <span>500<sup>+</sup></span>
+                    SVG Icons
+                  </h2>
+                  Font Awesome Kit.
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section>
+          <div class="wrap">
+            <h2><strong>WebSlides Demos</strong></h2>
+            <p>Contribute on <a href="https://github.com/webslides/webslides" title="Contribute on Github">Github</a>. <span class="alignright"><a href="demos/index.html" title="WebSlides Demos">View all &rsaquo;</a></span></p>
+            <ul class="flexblock gallery">
+              <li>
+                <a href="demos/why-webslides.html" title="Why WebSlides?">
+                  <figure>
+                    <img alt="Thumbnail Why WebSlides?" src="https://webslides.tv/static/images/demos-why.png">
+                    <figcaption>
+                      <h2>Why WebSlides?</h2>
+                    </figcaption>
+                  </figure>
+                </a>
+              </li>
+              <li>
+                <a href="demos/landings.html" title="Landings">
+                  <figure>
+                    <img alt="Thumbnail Landings" src="https://webslides.tv/static/images/demos-landings.png">
+                    <figcaption>
+                      <h2>Landings</h2>
+                    </figcaption>
+                  </figure>
+                </a>
+              </li>
+              <li>
+                <a href="demos/portfolios.html" title="Portfolios">
+                  <figure>
+                    <img alt="Thumbnail Portfolios" src="https://webslides.tv/static/images/demos-portfolios.png">
+                    <figcaption>
+                      <h2>Portfolios</h2>
+                    </figcaption>
+                  </figure>
+                </a>
+              </li>
+              <li>
+                <a href="demos/keynote.html" title="Apple Keynote">
+                  <figure>
+                    <img alt="Thumbnail Apple Keynote" src="https://webslides.tv/static/images/demos-apple.png">
+                    <figcaption>
+                      <h2>Apple Keynote</h2>
+                    </figcaption>
+                  </figure>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+        <section>
+          <div class="wrap">
+            <div class="grid vertical-align">
+              <div class="column">
+                <h4>
+                  <svg class="fa-life-ring">
+                    <use xlink:href="#fa-life-ring"></use>
+                  </svg>
+                  <strong>Guides</strong>
+                </h4>
+                <p>If you need help, here's just three tutorials. Just a basic knowledge of HTML is required:</p>
+                <ul class="description">
+                  <li><a href="demos/components.html" title="WebSlides Components">WebSlides Components</a>.</li>
+                  <li><a href="demos/classes.html" title="WebSlides Classes">WebSlides Classes</a>.</li>
+                  <li><a href="demos/media.html" title="WebSlides Media">WebSlides Media: images, videos...</a></li>
+                </ul>
+              </div>
+              <div class="column">
+                <figure><img class="aligncenter" src="static/images/setup.png" alt="WebSlides Files"></figure>
+              </div>
+              <div class="column">
+                <h4>
+                  <svg class="fa-cubes">
+                    <use xlink:href="#fa-cubes"></use>
+                  </svg>
+                  <strong>Built to expand</strong>
+                </h4>
+                <p>The best way to <strong>inspire with your content</strong> is to connect on a personal level:</p>
+                <ul class="description">
+                  <li>Background images: <a href="http://unsplash.com">Unsplash</a>.</li>
+                  <li>CSS animations: <a href="https://daneden.github.io/animate.css/">Animate.css</a>.</li>
+                  <li>Longforms: <a href="http://michalsnik.github.io/aos/"> Animate on scroll</a>.</li>
+                </ul>
+              </div>
+            </div>
+            <!--end .grid -->
+          </div>
+        </section>
+        <section class="aligncenter">
+          <!-- .wrap = container (width: 90%) -->
+          <div class="wrap">
+            <h2><strong>Ready to Start?</strong> </h2>
+            <p class="text-intro">Create your own presentation instantly. <br>120+ premium slides ready to use.</p>
+            <p>
+              <a href="https://webslides.tv/webslides-latest.zip" class="button" title="Download WebSlides">
+                <svg class="fa-cloud-download">
+                  <use xlink:href="#fa-cloud-download"></use>
+                </svg>
+                Free Download
+              </a>
+              <span class="try">
+                <a href="https://www.paypal.me/jlantunez/8" title="Thanks :)">
+                  <svg class="fa-paypal">
+                    <use xlink:href="#fa-paypal"></use>
+                  </svg>
+                  Pay what you want.
+                </a>
+              </span>
+            </p>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+        <section class="slide-bottom">
+          <div class="wrap">
+            <div class="content-right text-serif">
+              <h2>
+                <strong>Thanks.</strong>
+                <a target="_blank" title="Share on Twitter" href="https://twitter.com/intent/tweet?text=Finally,%20everything%20you%20need%20to%20make%20HTML%20presentations%20in%20a%20fast/beautiful%20way.%20@WebSlides%20=%20Good%20karma%20&mdash;%20https://webslides.tv">
+                  <svg class="fa-twitter">
+                    <use xlink:href="#fa-twitter"></use>
+                  </svg>
+                </a>
+              </h2>
+              <p>People share content that makes them feel inspired. WebSlides is a very effective way to engage young audiences, customers, and teams.</p> 
+              <p>Best,<br> <a href="https://twitter.com/jlantunez">@jlantunez</a>, <a href="https://twitter.com/belelros">@belelros</a>, and <a href="https://twitter.com/luissacristan">@luissacristan</a>.</p>
+            </div>
+            <!-- .end .content-right -->
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+      </article>
+      <!-- end article -->
+    </main>
+    <!-- end main -->
+
+    <!-- Required -->
+    <script src="static/js/webslides.js"></script>
+    <script>
+      window.ws = new WebSlides();
+    </script>
+
+    <!-- OPTIONAL - svg-icons.js (fontastic.me - Font Awesome as svg icons) -->
+    <script defer src="static/js/svg-icons.js"></script>
+
+  </body>
+</html>
