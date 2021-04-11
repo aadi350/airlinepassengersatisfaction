@@ -56,6 +56,10 @@ ui <- fluidPage(
                numericInput('depdelay', 'Leg-Room Service',3, 1, 5, 1)
         )
         
+    ),
+    
+    mainPanel(
+        textOutput("pred_var")
     )
    
     
@@ -63,7 +67,11 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-
+    
+    output$pred_var <- renderText({
+        paste("Selected", input$gender)
+    })
+    
     output$distPlot <- renderPlot({
         # generate bins based on input$bins from ui.R
         x    <- faithful[, 2]

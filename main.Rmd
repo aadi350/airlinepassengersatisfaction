@@ -189,6 +189,15 @@ r_squared <- (ll.null - ll.proposed) / ll.null
 
 r_squared
 ```
+```{r}
+
+# save(logmodel, file='model.RData')
+
+model = load( 'model.RData')
+
+newdata = df_enc[1, ]
+predict(get(model), newdata, type='response')
+```
 
 
 
