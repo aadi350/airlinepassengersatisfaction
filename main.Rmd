@@ -1,7 +1,8 @@
 ---
 title: "Airline Passenger Satisfaction"
 output:
-  html_notebook
+  pdf_document: default
+  html_notebook: default
 ---
 ## Loading and Preprocessing
 
@@ -25,12 +26,6 @@ Unnecessary columns are removed, from the above, X and id do not seem to contrib
 ```{r}
 df <- subset(df, select=-c(X, id))
 str(df)
-```
-```{r}
-str(df)
-```
-```{r}
-min(df$Flight.Distance)
 ```
 
 Following numeric encoding, R expects variables to be of type factor for Logistic Regression to be performed, this is done next. From the output that follows, the dataframe was successfully converted into levels with no NAs introduced by coercion errors throwh
@@ -94,19 +89,6 @@ ggplot(data = cor_matrix_melted, aes(Var2, Var1, fill = value))+
     size = 10, hjust = 1))+
  coord_fixed()
 ```
-## 
-```{r}
-library(psych)
-
-pairs.panels(df_enc, 
-             method = "pearson", # correlation method
-             hist.col = "#00AFBB",
-             density = TRUE,  # show density plots
-             ellipses = TRUE # show correlation ellipses
-             )
-```
-
-
 ## Logistic GLM
 
 Now the logit-model shall be built using the GLM syntax, with summary being called to display t-values, P-values estimated coefficients and the associated errors
@@ -118,8 +100,9 @@ Going through the coefficents that follow,the only factors which were not signif
 Attribute | Comments
 ----------------|--------------
 Gender | Positively correlated, which may imply that male customers are overally more satisfied
-Customer.Type | positively correlated, this implies that loyal customers may be overally more satisfied with their flight
-Class | Negative correlation may indicate that customers in upper classes may be more satisfied with the     airline's service
+Type of Travel | It seems that personal travel was more positively correlated with passenger satisfaction than business travel
+Customer.Type | Negative correlation implies that loyal customers may be overally less satisfied with their flight
+Class | Positive correlation may indicate that customers in upper classes may be less satisfied with the airline's service
 Inflight.wifi.service | the positive coefficient here may indicate that having inflight wifi may have a poistive effect on customer satisfcation
 Online.boarding | The positive coefficient indicates that having the option for online boarding  pre-flight may increase passenger satisfaction
 Checkin.service | Similar to the above, the quality of checkin-service may positvely correlate to passenger satisfaction
@@ -130,6 +113,7 @@ Ease.of.Online.booking | this was found to negatively correlate with passenger s
 Baggage.handling | the quality of baggage handling was also found to positively impact passenger satisfaction levels
 Departure.Arrival.time.convenient | strangely, the convenience of arrival time was found to negatively correlate with passenger satisfaction, this may proove an interesting area of research
 Inflight.service | Finally, the quality of inflight service (media, etc) was found to positively impact a passenger's level of satisfaction on a flight
+ 
  
 
 ```{r}
@@ -159,7 +143,10 @@ The likelihood ratio tests $H_{0}$: reduced model vs $H_{1}$: full model. Since 
 From the results of the LRT, it is shown that level of satisfaction is statistically (significantly) correlated to the attributes present in the full model, hence the null hypothesis (all attributes coefficients are zero) was disproven
 
 ```{r}
+library(lmtest)
+
 nullmodel <-  glm(formula = satisfaction ~ 1, family = binomial, data = df_enc)
+
 lrtest(nullmodel, logmodel)
 ```
 ### LRT Test with Reduced Model
@@ -189,15 +176,22 @@ r_squared <- (ll.null - ll.proposed) / ll.null
 
 r_squared
 ```
+Saving for Future Use
 ```{r}
-
-# save(logmodel, file='model.RData')
-
+save(logmodel, file='model.RData')
+```
+Although non-standard practice, for the purpose of prediction/application, a training tuple will be used to determine the likeliness of 'success' (passenger being satisfied)
+```{r}
 model = load( 'model.RData')
 
 newdata = df_enc[1, ]
-predict(get(model), newdata, type='response')
+predict(get(model), newdata)
 ```
+Given the above prediction, we can re-check the original dataframe, given that the above prediction was less than zero, the logistic regression model would have correctly classified the tuple into the 'not satisified/neutral' category 
+```{r}
+df_enc[1,ncol(df_enc)]
+```
+
 
 
 
