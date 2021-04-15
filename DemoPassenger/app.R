@@ -9,6 +9,7 @@
 
 library(shiny)
 
+model <- load('model.RData')
 ui <- fluidPage(
 
     # Application title
@@ -28,10 +29,12 @@ ui <- fluidPage(
     fluidRow(
         column(2, offset = 1,
                selectInput('gender', 'Gender', c("Male", "Female")),
-               selectInput('ctype', 'Customer Type', c("Mail", "Female")),
+               selectInput('ctype', 'Customer Type', c("Loyal", "Not Loyal")),
                selectInput('ttype', 'Travel Type', c("Personal", "Business")),
                selectInput('class', 'Class', c("Business", "Eco Plus", "Economy")),
-        ),
+               numericInput('age', 'Age', 25, 0, 100, 1)
+               
+               ),
         
         column(2, offset = 3,
                radioButtons('wifi', 'Inflight WiFi', c(1,2,3,4,5), inline=TRUE), 
@@ -57,7 +60,6 @@ ui <- fluidPage(
         )
         
     ),
-    
     mainPanel(
         textOutput("pred_var")
     )
@@ -67,19 +69,25 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    
-    output$pred_var <- renderText({
-        paste("Selected", input$gender)
+    dataReactive <- reactive({
+        data.frame(
+            Gender = c(input$gender),
+            Customer.Type = c(input$ctype),
+            Age = c(input$age)
+            
+        )
     })
     
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    predReactive <- eventReactive(dataReactive, {
+        predict(logmodel, dataReactive, type="response")
+    })
+    
+    
+    
+    output$pred_var <- renderTable(predReactive())
 
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    })
+    
+    
 }
 
 # Run the application 

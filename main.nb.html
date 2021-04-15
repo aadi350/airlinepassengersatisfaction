@@ -10,6 +10,7 @@
 
 
 
+<meta name="date" content="2021-04-15" />
 
 <title>Airline Passenger Satisfaction</title>
 
@@ -66,6 +67,7 @@ if (window.hljs) {
 </style>
 
 
+<link rel="stylesheet" href="data:text/css,%0Abody%7B%0Afont%2Dfamily%3A%20%27Times%20New%20Roman%27%3B%0Afont%2Dsize%3A%2013pt%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2024pt%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2018pt%3B%0A%7D" type="text/css" />
 
 
 
@@ -210,13 +212,33 @@ pre code {
 
 
 <h1 class="title toc-ignore">Airline Passenger Satisfaction</h1>
+<h4 class="author"><p>Aadidev Sooknanan<br />
+816003022</p></h4>
+<h4 class="date">April 15, 2021</h4>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<div id="loading-and-preprocessing" class="section level2">
-<h2>Loading and Preprocessing</h2>
+<div id="overview" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Overview</h1>
+<div id="objective" class="section level2" number="1.1">
+<h2 number="1.1"><span class="header-section-number">1.1</span> Objective</h2>
+<p>The aim of this project aims to predict airline passenger satisfaction</p>
+</div>
+<div id="dataset" class="section level2" number="1.2">
+<h2 number="1.2"><span class="header-section-number">1.2</span> Dataset</h2>
+<p>The data for this project was gotten from Kaggle.com and uploaded by user  [1]. The parameters are a mix of categorical and numerical as follows: : Gender, Customer Type, Type of Travel, Class, : Flight Distance, Inflight Wifi, Departure Time Convenient, Ease of Online Booking, Gate Location, Food and Drink, Online Boarding, Seat Comfort, Inflight Entertainment, Onboard Service, Leg Room Service, Baggage Handling, Checkin Service, Inflight Service, Cleanliness, Departure Delay, Arrival Delay. The class to be predicted is : Satisfied or Neutral/Negative. The data-set also contained some non-informative attributes such as  and Passenger ID, which were dropped prior to performing any analyses.</p>
+</div>
+<div id="problem-formulation" class="section level2" number="1.3">
+<h2 number="1.3"><span class="header-section-number">1.3</span> Problem Formulation</h2>
+<p>The problem will be formulated as a Generalised Linear Model, followed by sigmoid activation for the purpose of classification</p>
+</div>
+</div>
+<div id="r-implementation" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> R Implementation</h1>
+<div id="loading-and-preprocessing" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Loading and Preprocessing</h2>
 <p>Firstly, the CSV file is loaded into a variable called df, and the first few rows are previewed using the head function</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -227,7 +249,7 @@ df &lt;- read.csv(&#39;data/train.csv&#39;)
 df &lt;- df[complete.cases(df), ]
 head(df)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NiwibmNvbCI6MjUsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTdWVnpXNFRNUkQyL2dXYXRrbWdBdHFLUStCZVN4UWhjVUZxbXpRVlVxdFdVS1JlT0poZFoyUFZzU092TjZVM0hvUlg0TUtGbCtERWdRT3Z3RHNVWm4rOHUxa2xCZkZqeWRxWitlWS9NODZML3RuajVsa1RJZVFnRjluSThZQkUzcXZUd2RaVGhGd2JHQXVBcGVUN0ZwVFdnTmlBdXdxM2diSmp3YlZURDJDUldCZTRkZnMrUW11ZmtQWGhNMEt2dnlIcmk0T3NqMDhBNjZSNDV0ZzlJcHpPb1JzRE9sN0V6ZE9iOWRvNmxKZUVkM3R4cE9XWXFseDZLMkFSbndmTVYvOGJhZG1rMWJ4cG0vbjNXVTVYMDIyZlVCVkpBUTVPRlpsU2JzUjdjY1FFamFLdS92Zmllc2paakc3dSs3Sjd3dVBJOE1iTEgvSU8rQ3ViWXNGRW9PL3dRMDVoZUxhQi9ncjArMHJUblB6YWxlbHlLcmhid2J6SzlNMno5eXEwd2EwNXVGWEJ2WnozY2gyM2hodi9Yc1dIZlkyOTl3di85Zmdtbm92bTEyOWltNjlicTkrdDlNUlpnRnVWYjcxL1ZaL3VBdnk2L0RkeVBqbkxxRHl0Qk4vWnpwaWRkVFJ6ZGg2aVJhZUR5dEc4SjJnTW84eTdVblZob1NPaVdUUmtOUGc5ZU9tLzZjOCttSjRnWXhybHFXK1lWL1FzSjJ4bTNEVU9xQWlLWjJUVlBDRDQ5SEppbmpobk56UmtLeEZqT2NRejc0VFg0NlRZdFBhQXMzQ2tjWjlGbWdqZldONTVMb1laY01HR0RFZFVUVmtCUHVqVENWRTZWaFR2S3NXbWhHUE54aFQ3VWt5cFlGVG9YUEh1UG9uUytNZUN3M3JqTjFLZU14R2E3QStJcHBoTEgzb2loVWw1SUdXQWlRaHdvSmc0TjFrV0RvZ0tTZzhyTHluUkVIWThsS3FJV1dRT2VWQ2xDUlBqTXFQT3NjaWMxRXJxSE5JUUt5bkhkZmtlQ1VNU1VqeUNsSGdadWQwYlVSOXFxYXNYd1dmbHl6MU9TVnBDMGZqTnNvbDl5c2tsQm1kSFRNU2FHbzExMDl3RitFbzJUTVJQMnpjN1QwdEtYbUF6VThtYTJlK3kxV2pVQjg5UGh5RWJQQ05zQmtRVFBGUmdEOXhWemVTR25DUVJ3Y2hleTVlNmFteXBtcUFkaXlTVFlNc2Z4ZUo4NjFFU0lGOTQ4d2hZcVB6M3M5SU5TRVBhUDNKWG5obC9La0pvb3NtZGt6ZkZWTGVnNHJSZ1BJSEJNYjkzRTZRUjFsSVRvOWYwSlRlU3REWjA5Uk5XQzh3ODJRZ0FBQT09In0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NiwibmNvbCI6MjUsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGZbLDI1XSBbNiDDlyAyNV0iXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBN1ZWelc0VE1SRDIvZ1dhdGttZ0F0cUtRK0JlU3hRaGNVRnFtelFWVXF0V1VLUmVPSmhkWjJQVnNTT3ZONlUzSG9SWDRNS0ZsK0RFZ1FPdndEc1Vabis4dTFrbEJmRmp5ZHFaK2VZL004NkwvdG5qNWxrVEllUWdGOW5JOFlCRTNxdlR3ZFpUaEZ3YkdBdUFwZVQ3RnBUV2dOaUF1d3EzZ2JKandiVlREMkNSV0JlNGRmcytRbXVma1BYaE0wS3Z2eUhyaTRPc2owOEE2NlI0NXRnOUlwek9vUnNET2w3RXpkT2I5ZG82bEplRWQzdHhwT1dZcWx4NksyQVJud2ZNVi84YmFkbWsxYnhwbS9uM1dVNVgwMjJmVUJWSkFRNU9GWmxTYnNSN2NjUUVqYUt1L3ZmaWVzalpqRzd1KzdKN3d1UEk4TWJMSC9JTytDdWJZc0ZFb08vd1EwNWhlTGFCL2dyMCswclRuUHphbGVseUtyaGJ3YnpLOU0yejl5cTB3YTA1dUZYQnZaejNjaDIzaGh2L1hzV0hmWTI5OXd2LzlmZ21ub3ZtMTI5aW02OWJxOSt0OU1SWmdGdVZiNzEvVlovdUF2eTYvRGR5UGpuTHFEeXRCTi9aenBpZGRUUnpkaDZpUmFlRHl0RzhKMmdNbzh5N1VuVmhvU09pV1RSa05QZzllT20vNmM4K21KNGdZeHJscVcrWVYvUXNKMnhtM0RVT3FBaUtaMlRWUENENDlISmluamhuTnpSa0t4RmpPY1F6NzRUWDQ2VFl0UGFBczNDa2NaOUZtZ2pmV041NUxvWVpjTUdHREVkVVRWa0JQdWpUQ1ZFNlZoVHZLc1dtaEdQTnhoVDdVa3lwWUZUb1hQSHVQb25TK01lQ3czcmpOMUtlTXhHYTdBK0lwcGhMSDNvaWhVbDVJR1dBaVFod29KZzROMWtXRG9nS1NnOHJMeW5SRUhZOGxLcUlXV1FPZVZDbENSUGpNcVBPc2NpYzFFcnFITklRS3luSGRma2VDVU1TVWp5Q2xIZ1p1ZDBiVVI5cXFhc1h3V2ZseXoxT1NWcEMwZmpOc29sOXlza2xCbWRIVE1TYUdvMTEwOXdGK0VvMlRNUlAyemM3VDB0S1htQXpVOG1hMmUreTFXalVCODlQaHlFYlBDTnNCa1FUUEZSZ0Q5eFZ6ZVNHbkNRUndjaGV5NWU2YW15cG1xQWRpeVNUWU1zZnhlSjg2MUVTSUY5NDh3aFlxUHozczlJTlNFUGFQM0pYbmhsL0trSm9vc21ka3pmRlZMZWc0clJnUElIQk1iOTNFNlFSMWxJVG85ZjBKVGVTdERaMDlSTldDOHc4MlFnQUFBPT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["id"],"name":[2],"type":["int"],"align":["right"]},{"label":["Gender"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Customer.Type"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["int"],"align":["right"]},{"label":["Type.of.Travel"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Class"],"name":[7],"type":["chr"],"align":["left"]},{"label":["Flight.Distance"],"name":[8],"type":["int"],"align":["right"]},{"label":["Inflight.wifi.service"],"name":[9],"type":["int"],"align":["right"]},{"label":["Departure.Arrival.time.convenient"],"name":[10],"type":["int"],"align":["right"]},{"label":["Ease.of.Online.booking"],"name":[11],"type":["int"],"align":["right"]},{"label":["Gate.location"],"name":[12],"type":["int"],"align":["right"]},{"label":["Food.and.drink"],"name":[13],"type":["int"],"align":["right"]},{"label":["Online.boarding"],"name":[14],"type":["int"],"align":["right"]},{"label":["Seat.comfort"],"name":[15],"type":["int"],"align":["right"]},{"label":["Inflight.entertainment"],"name":[16],"type":["int"],"align":["right"]},{"label":["On.board.service"],"name":[17],"type":["int"],"align":["right"]},{"label":["Leg.room.service"],"name":[18],"type":["int"],"align":["right"]},{"label":["Baggage.handling"],"name":[19],"type":["int"],"align":["right"]},{"label":["Checkin.service"],"name":[20],"type":["int"],"align":["right"]},{"label":["Inflight.service"],"name":[21],"type":["int"],"align":["right"]},{"label":["Cleanliness"],"name":[22],"type":["int"],"align":["right"]},{"label":["Departure.Delay.in.Minutes"],"name":[23],"type":["int"],"align":["right"]},{"label":["Arrival.Delay.in.Minutes"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["satisfaction"],"name":[25],"type":["chr"],"align":["left"]}],"data":[{"1":"0","2":"70172","3":"Male","4":"Loyal Customer","5":"13","6":"Personal Travel","7":"Eco Plus","8":"460","9":"3","10":"4","11":"3","12":"1","13":"5","14":"3","15":"5","16":"5","17":"4","18":"3","19":"4","20":"4","21":"5","22":"5","23":"25","24":"18","25":"neutral or dissatisfied","_rn_":"1"},{"1":"1","2":"5047","3":"Male","4":"disloyal Customer","5":"25","6":"Business travel","7":"Business","8":"235","9":"3","10":"2","11":"3","12":"3","13":"1","14":"3","15":"1","16":"1","17":"1","18":"5","19":"3","20":"1","21":"4","22":"1","23":"1","24":"6","25":"neutral or dissatisfied","_rn_":"2"},{"1":"2","2":"110028","3":"Female","4":"Loyal Customer","5":"26","6":"Business travel","7":"Business","8":"1142","9":"2","10":"2","11":"2","12":"2","13":"5","14":"5","15":"5","16":"5","17":"4","18":"3","19":"4","20":"4","21":"4","22":"5","23":"0","24":"0","25":"satisfied","_rn_":"3"},{"1":"3","2":"24026","3":"Female","4":"Loyal Customer","5":"25","6":"Business travel","7":"Business","8":"562","9":"2","10":"5","11":"5","12":"5","13":"2","14":"2","15":"2","16":"2","17":"2","18":"5","19":"3","20":"1","21":"4","22":"2","23":"11","24":"9","25":"neutral or dissatisfied","_rn_":"4"},{"1":"4","2":"119299","3":"Male","4":"Loyal Customer","5":"61","6":"Business travel","7":"Business","8":"214","9":"3","10":"3","11":"3","12":"3","13":"4","14":"5","15":"5","16":"3","17":"3","18":"4","19":"4","20":"3","21":"3","22":"3","23":"0","24":"0","25":"satisfied","_rn_":"5"},{"1":"5","2":"111157","3":"Female","4":"Loyal Customer","5":"26","6":"Personal Travel","7":"Eco","8":"1180","9":"3","10":"4","11":"2","12":"1","13":"1","14":"2","15":"1","16":"1","17":"3","18":"4","19":"4","20":"4","21":"4","22":"1","23":"0","24":"0","25":"neutral or dissatisfied","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[25]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
@@ -243,7 +265,7 @@ head(df)</code></pre>
 <pre class="r"><code>labels = subset(df, select=&quot;satisfaction&quot;)
 unique(labels)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6MSwic3VtbWFyeSI6W119LCJyZGYiOiJINHNJQUFBQUFBQUFBMTFQUVU3RE1CRGNPSFZSSWdxVk9IRHRCNUlEdmZRQmlBY2drSHBkRWhjc2pGM1pqdUQxaFhXNlZvVVAxbnBuZDJabm5oLzMyM2JmQWtBTkN4QlFTL3FDZkgxNTZuWUFDMEZOUllNbTFSOWF1cHNCZ0RVOXdZTjdxNmJvMFd5YzM0dzZCSXc2SExRYWVkeGNnUCtDMHVLWENpeVd3ZXZ6Tmc1Uk8xc1FHdSsrKzB4YXpRN09idXBTZVRBWVN1VjJ4SWo5d1JPZnVsTkJ1WExIZEpGSUltV1VCYm55QlhBNzJlUms3SWFQeVg1MkQra0F1Nm5ZWGNVT1Z4YzhuUlMvTENWWmFxbnN1N1lxZXpmNHBndzNONVI0RHR3ZnZiWXhKeUUwOU5GRnpIdnQ0RXhHNW14dytnTVM2N2IrMmdFQUFBPT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6MSwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZlssMV0gWzIgw5cgMV0iXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBMTFQUVU3RE1CRGNPSFZSSWdxVk9IRHRCNUlEdmZRQmlBY2drSHBkRWhjc2pGM1pqdUQxaFhXNlZvVVAxbnBuZDJabm5oLzMyM2JmQWtBTkN4QlFTL3FDZkgxNTZuWUFDMEZOUllNbTFSOWF1cHNCZ0RVOXdZTjdxNmJvMFd5YzM0dzZCSXc2SExRYWVkeGNnUCtDMHVLWENpeVd3ZXZ6Tmc1Uk8xc1FHdSsrKzB4YXpRN09idXBTZVRBWVN1VjJ4SWo5d1JPZnVsTkJ1WExIZEpGSUltV1VCYm55QlhBNzJlUms3SWFQeVg1MkQra0F1Nm5ZWGNVT1Z4YzhuUlMvTENWWmFxbnN1N1lxZXpmNHBndzNONVI0RHR3ZnZiWXhKeUUwOU5GRnpIdnQ0RXhHNW14dytnTVM2N2IrMmdFQUFBPT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["satisfaction"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"neutral or dissatisfied","_rn_":"1"},{"1":"satisfied","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
@@ -354,8 +376,8 @@ str(df_enc)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="correlation-analysis" class="section level2">
-<h2>Correlation Analysis</h2>
+<div id="correlation-analysis" class="section level2" number="2.2">
+<h2 number="2.2"><span class="header-section-number">2.2</span> Correlation Analysis</h2>
 <p>Correlation analysis is performed to determine pairwise correlations within the dataset. Since we are concerned mainly with linear relations, the Pearson correlation coefficient is used in order to determine the extent of correlation amongst the attributes, this is visualised using a correlation heatmap below</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -384,12 +406,12 @@ ggplot(data = cor_matrix_melted, aes(Var2, Var1, fill = value))+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="logistic-glm" class="section level2">
-<h2>Logistic GLM</h2>
+<div id="logistic-glm" class="section level2" number="2.3">
+<h2 number="2.3"><span class="header-section-number">2.3</span> Logistic GLM</h2>
 <p>Now the logit-model shall be built using the GLM syntax, with summary being called to display t-values, P-values estimated coefficients and the associated errors</p>
 <p>Going through the coefficents that follow,the only factors which were not significantly correlated to satisfaction was flight distance. It seemed that all other factors exhibited some level of linear correlation with the response variable. However, a high level of significance does not alone make an attribute statistically ‘interesting’. Following the levels of estimated correlation, the attributes with the highest coefficients are as follows (in descending magnitude of estimated coefficient):</p>
-<div id="explanation-of-coefficients" class="section level3">
-<h3>Explanation of Coefficients</h3>
+<div id="explanation-of-coefficients" class="section level3" number="2.3.1">
+<h3 number="2.3.1"><span class="header-section-number">2.3.1</span> Explanation of Coefficients</h3>
 <table>
 <colgroup>
 <col width="53%" />
@@ -468,7 +490,7 @@ ggplot(data = cor_matrix_melted, aes(Var2, Var1, fill = value))+
 )
 summary(logmodel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSBzYXRpc2ZhY3Rpb24gfiAuLCBmYW1pbHkgPSBiaW5vbWlhbCwgZGF0YSA9IGRmX2VuYylcblxuRGV2aWFuY2UgUmVzaWR1YWxzOiBcbiAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggIFxuLTIuODA0MyAgLTAuNTAxMyAgLTAuMTc0NCAgIDAuMzkxOSAgIDMuOTg3MSAgXG5cbkNvZWZmaWNpZW50czpcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgeiB2YWx1ZSBQcig+fHp8KSAgICBcbihJbnRlcmNlcHQpICAgICAgICAgICAgICAgICAgICAgICAtMS4wMDRlKzAxICAxLjEwOGUtMDEgLTkwLjUzOCAgPCAyZS0xNiAqKipcbkdlbmRlciAgICAgICAgICAgICAgICAgICAgICAgICAgICAtNS4zMTVlLTAyICAxLjkzNmUtMDIgIC0yLjc0NSAgMC4wMDYwNCAqKiBcbkN1c3RvbWVyLlR5cGUgICAgICAgICAgICAgICAgICAgICAtMi4wNDhlKzAwICAyLjk0N2UtMDIgLTY5LjUwMCAgPCAyZS0xNiAqKipcbkFnZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtNy42MDFlLTAzICA3LjA2NWUtMDQgLTEwLjc1OSAgPCAyZS0xNiAqKipcblR5cGUub2YuVHJhdmVsICAgICAgICAgICAgICAgICAgICAgMy4wNDFlKzAwICAyLjk1MmUtMDIgMTAzLjAxMCAgPCAyZS0xNiAqKipcbkNsYXNzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMS45NDFlLTAxICAxLjY5MmUtMDIgLTExLjQ3MSAgPCAyZS0xNiAqKipcbkZsaWdodC5EaXN0YW5jZSAgICAgICAgICAgICAgICAgICAgOC4zODhlLTA1ICAxLjA2OWUtMDUgICA3Ljg0OSA0LjIwZS0xNSAqKipcbkluZmxpZ2h0LndpZmkuc2VydmljZSAgICAgICAgICAgICAgMy40OTBlLTAxICAxLjEzNWUtMDIgIDMwLjc1MyAgPCAyZS0xNiAqKipcbkRlcGFydHVyZS5BcnJpdmFsLnRpbWUuY29udmVuaWVudCAtMS4yNTFlLTAxICA4LjE2M2UtMDMgLTE1LjMyOSAgPCAyZS0xNiAqKipcbkVhc2Uub2YuT25saW5lLmJvb2tpbmcgICAgICAgICAgICAtMS4yOTFlLTAxICAxLjEzNGUtMDIgLTExLjM4NiAgPCAyZS0xNiAqKipcbkdhdGUubG9jYXRpb24gICAgICAgICAgICAgICAgICAgICAgMi44NTFlLTAyICA5LjEyMGUtMDMgICAzLjEyNiAgMC4wMDE3NyAqKiBcbkZvb2QuYW5kLmRyaW5rICAgICAgICAgICAgICAgICAgICAtMi4xNThlLTAyICAxLjA2NGUtMDIgIC0yLjAyOCAgMC4wNDI1NSAqICBcbk9ubGluZS5ib2FyZGluZyAgICAgICAgICAgICAgICAgICAgNi40MThlLTAxICAxLjAxNmUtMDIgIDYzLjE4MCAgPCAyZS0xNiAqKipcblNlYXQuY29tZm9ydCAgICAgICAgICAgICAgICAgICAgICAgOC41MzdlLTAyICAxLjEwOWUtMDIgICA3LjcwMSAxLjM1ZS0xNCAqKipcbkluZmxpZ2h0LmVudGVydGFpbm1lbnQgICAgICAgICAgICAgMy4zNzFlLTAyICAxLjQxN2UtMDIgICAyLjM3OSAgMC4wMTczNyAqICBcbk9uLmJvYXJkLnNlcnZpY2UgICAgICAgICAgICAgICAgICAgMy4yNDdlLTAxICAxLjAxMGUtMDIgIDMyLjE0NCAgPCAyZS0xNiAqKipcbkxlZy5yb29tLnNlcnZpY2UgICAgICAgICAgICAgICAgICAgMi41OTRlLTAxICA4LjQ4MGUtMDMgIDMwLjU4NyAgPCAyZS0xNiAqKipcbkJhZ2dhZ2UuaGFuZGxpbmcgICAgICAgICAgICAgICAgICAgMS41NDZlLTAxICAxLjE0MGUtMDIgIDEzLjU2MiAgPCAyZS0xNiAqKipcbkNoZWNraW4uc2VydmljZSAgICAgICAgICAgICAgICAgICAgMy4zOTFlLTAxICA4LjUxMGUtMDMgIDM5Ljg1MyAgPCAyZS0xNiAqKipcbkluZmxpZ2h0LnNlcnZpY2UgICAgICAgICAgICAgICAgICAgMS40MzhlLTAxICAxLjIwMGUtMDIgIDExLjk4NiAgPCAyZS0xNiAqKipcbkNsZWFubGluZXNzICAgICAgICAgICAgICAgICAgICAgICAgMi4yMTdlLTAxICAxLjIwOGUtMDIgIDE4LjM1OSAgPCAyZS0xNiAqKipcbkRlcGFydHVyZS5EZWxheS5pbi5NaW51dGVzICAgICAgICAgNC45MTdlLTAzICA5LjgwMmUtMDQgICA1LjAxNiA1LjI3ZS0wNyAqKipcbkFycml2YWwuRGVsYXkuaW4uTWludXRlcyAgICAgICAgICAtOS42NjllLTAzICA5LjY2MmUtMDQgLTEwLjAwOCAgPCAyZS0xNiAqKipcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuXG4oRGlzcGVyc2lvbiBwYXJhbWV0ZXIgZm9yIGJpbm9taWFsIGZhbWlseSB0YWtlbiB0byBiZSAxKVxuXG4gICAgTnVsbCBkZXZpYW5jZTogMTQxNzY4ICBvbiAxMDM1OTMgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuUmVzaWR1YWwgZGV2aWFuY2U6ICA2OTk4MyAgb24gMTAzNTcxICBkZWdyZWVzIG9mIGZyZWVkb21cbkFJQzogNzAwMjlcblxuTnVtYmVyIG9mIEZpc2hlciBTY29yaW5nIGl0ZXJhdGlvbnM6IDZcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSBzYXRpc2ZhY3Rpb24gfiAuLCBmYW1pbHkgPSBiaW5vbWlhbCwgZGF0YSA9IGRmX2VuYylcblxuRGV2aWFuY2UgUmVzaWR1YWxzOiBcbiAgICBNaW4gICAgICAgMVEgICBNZWRpYW4gICAgICAgM1EgICAgICBNYXggIFxuLTIuODA0MyAgLTAuNTAxMyAgLTAuMTc0NCAgIDAuMzkxOSAgIDMuOTg3MSAgXG5cbkNvZWZmaWNpZW50czpcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgeiB2YWx1ZSBQcig+fHp8KVxuKEludGVyY2VwdCkgICAgICAgICAgICAgICAgICAgICAgIC0xLjAwNGUrMDEgIDEuMTA4ZS0wMSAtOTAuNTM4ICA8IDJlLTE2XG5HZW5kZXIgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTUuMzE1ZS0wMiAgMS45MzZlLTAyICAtMi43NDUgIDAuMDA2MDRcbkN1c3RvbWVyLlR5cGUgICAgICAgICAgICAgICAgICAgICAtMi4wNDhlKzAwICAyLjk0N2UtMDIgLTY5LjUwMCAgPCAyZS0xNlxuQWdlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC03LjYwMWUtMDMgIDcuMDY1ZS0wNCAtMTAuNzU5ICA8IDJlLTE2XG5UeXBlLm9mLlRyYXZlbCAgICAgICAgICAgICAgICAgICAgIDMuMDQxZSswMCAgMi45NTJlLTAyIDEwMy4wMTAgIDwgMmUtMTZcbkNsYXNzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMS45NDFlLTAxICAxLjY5MmUtMDIgLTExLjQ3MSAgPCAyZS0xNlxuRmxpZ2h0LkRpc3RhbmNlICAgICAgICAgICAgICAgICAgICA4LjM4OGUtMDUgIDEuMDY5ZS0wNSAgIDcuODQ5IDQuMjBlLTE1XG5JbmZsaWdodC53aWZpLnNlcnZpY2UgICAgICAgICAgICAgIDMuNDkwZS0wMSAgMS4xMzVlLTAyICAzMC43NTMgIDwgMmUtMTZcbkRlcGFydHVyZS5BcnJpdmFsLnRpbWUuY29udmVuaWVudCAtMS4yNTFlLTAxICA4LjE2M2UtMDMgLTE1LjMyOSAgPCAyZS0xNlxuRWFzZS5vZi5PbmxpbmUuYm9va2luZyAgICAgICAgICAgIC0xLjI5MWUtMDEgIDEuMTM0ZS0wMiAtMTEuMzg2ICA8IDJlLTE2XG5HYXRlLmxvY2F0aW9uICAgICAgICAgICAgICAgICAgICAgIDIuODUxZS0wMiAgOS4xMjBlLTAzICAgMy4xMjYgIDAuMDAxNzdcbkZvb2QuYW5kLmRyaW5rICAgICAgICAgICAgICAgICAgICAtMi4xNThlLTAyICAxLjA2NGUtMDIgIC0yLjAyOCAgMC4wNDI1NVxuT25saW5lLmJvYXJkaW5nICAgICAgICAgICAgICAgICAgICA2LjQxOGUtMDEgIDEuMDE2ZS0wMiAgNjMuMTgwICA8IDJlLTE2XG5TZWF0LmNvbWZvcnQgICAgICAgICAgICAgICAgICAgICAgIDguNTM3ZS0wMiAgMS4xMDllLTAyICAgNy43MDEgMS4zNWUtMTRcbkluZmxpZ2h0LmVudGVydGFpbm1lbnQgICAgICAgICAgICAgMy4zNzFlLTAyICAxLjQxN2UtMDIgICAyLjM3OSAgMC4wMTczN1xuT24uYm9hcmQuc2VydmljZSAgICAgICAgICAgICAgICAgICAzLjI0N2UtMDEgIDEuMDEwZS0wMiAgMzIuMTQ0ICA8IDJlLTE2XG5MZWcucm9vbS5zZXJ2aWNlICAgICAgICAgICAgICAgICAgIDIuNTk0ZS0wMSAgOC40ODBlLTAzICAzMC41ODcgIDwgMmUtMTZcbkJhZ2dhZ2UuaGFuZGxpbmcgICAgICAgICAgICAgICAgICAgMS41NDZlLTAxICAxLjE0MGUtMDIgIDEzLjU2MiAgPCAyZS0xNlxuQ2hlY2tpbi5zZXJ2aWNlICAgICAgICAgICAgICAgICAgICAzLjM5MWUtMDEgIDguNTEwZS0wMyAgMzkuODUzICA8IDJlLTE2XG5JbmZsaWdodC5zZXJ2aWNlICAgICAgICAgICAgICAgICAgIDEuNDM4ZS0wMSAgMS4yMDBlLTAyICAxMS45ODYgIDwgMmUtMTZcbkNsZWFubGluZXNzICAgICAgICAgICAgICAgICAgICAgICAgMi4yMTdlLTAxICAxLjIwOGUtMDIgIDE4LjM1OSAgPCAyZS0xNlxuRGVwYXJ0dXJlLkRlbGF5LmluLk1pbnV0ZXMgICAgICAgICA0LjkxN2UtMDMgIDkuODAyZS0wNCAgIDUuMDE2IDUuMjdlLTA3XG5BcnJpdmFsLkRlbGF5LmluLk1pbnV0ZXMgICAgICAgICAgLTkuNjY5ZS0wMyAgOS42NjJlLTA0IC0xMC4wMDggIDwgMmUtMTZcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbihJbnRlcmNlcHQpICAgICAgICAgICAgICAgICAgICAgICAqKipcbkdlbmRlciAgICAgICAgICAgICAgICAgICAgICAgICAgICAqKiBcbkN1c3RvbWVyLlR5cGUgICAgICAgICAgICAgICAgICAgICAqKipcbkFnZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAqKipcblR5cGUub2YuVHJhdmVsICAgICAgICAgICAgICAgICAgICAqKipcbkNsYXNzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAqKipcbkZsaWdodC5EaXN0YW5jZSAgICAgICAgICAgICAgICAgICAqKipcbkluZmxpZ2h0LndpZmkuc2VydmljZSAgICAgICAgICAgICAqKipcbkRlcGFydHVyZS5BcnJpdmFsLnRpbWUuY29udmVuaWVudCAqKipcbkVhc2Uub2YuT25saW5lLmJvb2tpbmcgICAgICAgICAgICAqKipcbkdhdGUubG9jYXRpb24gICAgICAgICAgICAgICAgICAgICAqKiBcbkZvb2QuYW5kLmRyaW5rICAgICAgICAgICAgICAgICAgICAqICBcbk9ubGluZS5ib2FyZGluZyAgICAgICAgICAgICAgICAgICAqKipcblNlYXQuY29tZm9ydCAgICAgICAgICAgICAgICAgICAgICAqKipcbkluZmxpZ2h0LmVudGVydGFpbm1lbnQgICAgICAgICAgICAqICBcbk9uLmJvYXJkLnNlcnZpY2UgICAgICAgICAgICAgICAgICAqKipcbkxlZy5yb29tLnNlcnZpY2UgICAgICAgICAgICAgICAgICAqKipcbkJhZ2dhZ2UuaGFuZGxpbmcgICAgICAgICAgICAgICAgICAqKipcbkNoZWNraW4uc2VydmljZSAgICAgICAgICAgICAgICAgICAqKipcbkluZmxpZ2h0LnNlcnZpY2UgICAgICAgICAgICAgICAgICAqKipcbkNsZWFubGluZXNzICAgICAgICAgICAgICAgICAgICAgICAqKipcbkRlcGFydHVyZS5EZWxheS5pbi5NaW51dGVzICAgICAgICAqKipcbkFycml2YWwuRGVsYXkuaW4uTWludXRlcyAgICAgICAgICAqKipcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuXG4oRGlzcGVyc2lvbiBwYXJhbWV0ZXIgZm9yIGJpbm9taWFsIGZhbWlseSB0YWtlbiB0byBiZSAxKVxuXG4gICAgTnVsbCBkZXZpYW5jZTogMTQxNzY4ICBvbiAxMDM1OTMgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuUmVzaWR1YWwgZGV2aWFuY2U6ICA2OTk4MyAgb24gMTAzNTcxICBkZWdyZWVzIG9mIGZyZWVkb21cbkFJQzogNzAwMjlcblxuTnVtYmVyIG9mIEZpc2hlciBTY29yaW5nIGl0ZXJhdGlvbnM6IDZcbiJ9 -->
 <pre><code>
 Call:
 glm(formula = satisfaction ~ ., family = binomial, data = df_enc)
@@ -478,30 +500,54 @@ Deviance Residuals:
 -2.8043  -0.5013  -0.1744   0.3919   3.9871  
 
 Coefficients:
-                                    Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)                       -1.004e+01  1.108e-01 -90.538  &lt; 2e-16 ***
-Gender                            -5.315e-02  1.936e-02  -2.745  0.00604 ** 
-Customer.Type                     -2.048e+00  2.947e-02 -69.500  &lt; 2e-16 ***
-Age                               -7.601e-03  7.065e-04 -10.759  &lt; 2e-16 ***
-Type.of.Travel                     3.041e+00  2.952e-02 103.010  &lt; 2e-16 ***
-Class                             -1.941e-01  1.692e-02 -11.471  &lt; 2e-16 ***
-Flight.Distance                    8.388e-05  1.069e-05   7.849 4.20e-15 ***
-Inflight.wifi.service              3.490e-01  1.135e-02  30.753  &lt; 2e-16 ***
-Departure.Arrival.time.convenient -1.251e-01  8.163e-03 -15.329  &lt; 2e-16 ***
-Ease.of.Online.booking            -1.291e-01  1.134e-02 -11.386  &lt; 2e-16 ***
-Gate.location                      2.851e-02  9.120e-03   3.126  0.00177 ** 
-Food.and.drink                    -2.158e-02  1.064e-02  -2.028  0.04255 *  
-Online.boarding                    6.418e-01  1.016e-02  63.180  &lt; 2e-16 ***
-Seat.comfort                       8.537e-02  1.109e-02   7.701 1.35e-14 ***
-Inflight.entertainment             3.371e-02  1.417e-02   2.379  0.01737 *  
-On.board.service                   3.247e-01  1.010e-02  32.144  &lt; 2e-16 ***
-Leg.room.service                   2.594e-01  8.480e-03  30.587  &lt; 2e-16 ***
-Baggage.handling                   1.546e-01  1.140e-02  13.562  &lt; 2e-16 ***
-Checkin.service                    3.391e-01  8.510e-03  39.853  &lt; 2e-16 ***
-Inflight.service                   1.438e-01  1.200e-02  11.986  &lt; 2e-16 ***
-Cleanliness                        2.217e-01  1.208e-02  18.359  &lt; 2e-16 ***
-Departure.Delay.in.Minutes         4.917e-03  9.802e-04   5.016 5.27e-07 ***
-Arrival.Delay.in.Minutes          -9.669e-03  9.662e-04 -10.008  &lt; 2e-16 ***
+                                    Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)                       -1.004e+01  1.108e-01 -90.538  &lt; 2e-16
+Gender                            -5.315e-02  1.936e-02  -2.745  0.00604
+Customer.Type                     -2.048e+00  2.947e-02 -69.500  &lt; 2e-16
+Age                               -7.601e-03  7.065e-04 -10.759  &lt; 2e-16
+Type.of.Travel                     3.041e+00  2.952e-02 103.010  &lt; 2e-16
+Class                             -1.941e-01  1.692e-02 -11.471  &lt; 2e-16
+Flight.Distance                    8.388e-05  1.069e-05   7.849 4.20e-15
+Inflight.wifi.service              3.490e-01  1.135e-02  30.753  &lt; 2e-16
+Departure.Arrival.time.convenient -1.251e-01  8.163e-03 -15.329  &lt; 2e-16
+Ease.of.Online.booking            -1.291e-01  1.134e-02 -11.386  &lt; 2e-16
+Gate.location                      2.851e-02  9.120e-03   3.126  0.00177
+Food.and.drink                    -2.158e-02  1.064e-02  -2.028  0.04255
+Online.boarding                    6.418e-01  1.016e-02  63.180  &lt; 2e-16
+Seat.comfort                       8.537e-02  1.109e-02   7.701 1.35e-14
+Inflight.entertainment             3.371e-02  1.417e-02   2.379  0.01737
+On.board.service                   3.247e-01  1.010e-02  32.144  &lt; 2e-16
+Leg.room.service                   2.594e-01  8.480e-03  30.587  &lt; 2e-16
+Baggage.handling                   1.546e-01  1.140e-02  13.562  &lt; 2e-16
+Checkin.service                    3.391e-01  8.510e-03  39.853  &lt; 2e-16
+Inflight.service                   1.438e-01  1.200e-02  11.986  &lt; 2e-16
+Cleanliness                        2.217e-01  1.208e-02  18.359  &lt; 2e-16
+Departure.Delay.in.Minutes         4.917e-03  9.802e-04   5.016 5.27e-07
+Arrival.Delay.in.Minutes          -9.669e-03  9.662e-04 -10.008  &lt; 2e-16
+                                     
+(Intercept)                       ***
+Gender                            ** 
+Customer.Type                     ***
+Age                               ***
+Type.of.Travel                    ***
+Class                             ***
+Flight.Distance                   ***
+Inflight.wifi.service             ***
+Departure.Arrival.time.convenient ***
+Ease.of.Online.booking            ***
+Gate.location                     ** 
+Food.and.drink                    *  
+Online.boarding                   ***
+Seat.comfort                      ***
+Inflight.entertainment            *  
+On.board.service                  ***
+Leg.room.service                  ***
+Baggage.handling                  ***
+Checkin.service                   ***
+Inflight.service                  ***
+Cleanliness                       ***
+Departure.Delay.in.Minutes        ***
+Arrival.Delay.in.Minutes          ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
@@ -516,8 +562,8 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="confidence-intervals" class="section level3">
-<h3>Confidence Intervals</h3>
+<div id="confidence-intervals" class="section level3" number="2.3.2">
+<h3 number="2.3.2"><span class="header-section-number">2.3.2</span> Confidence Intervals</h3>
 <p>The confidence intervals for the parameters at level 0.95 are found using the confint-function as shown below</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -556,8 +602,8 @@ Arrival.Delay.in.Minutes          -1.156619e-02 -0.0077788492</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="confidence-intervals-for-odds-ratio" class="section level3">
-<h3>Confidence Intervals for Odds Ratio</h3>
+<div id="confidence-intervals-for-odds-ratio" class="section level3" number="2.3.3">
+<h3 number="2.3.3"><span class="header-section-number">2.3.3</span> Confidence Intervals for Odds Ratio</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXhwKGNvbmZpbnQobG9nbW9kZWwsIGxldmVsID0gMC45NSkpXG5gYGAifQ== -->
@@ -596,11 +642,11 @@ Arrival.Delay.in.Minutes          9.885004e-01 9.922513e-01</code></pre>
 <!-- rnb-text-begin -->
 </div>
 </div>
-<div id="lrt-test" class="section level2">
-<h2>LRT Test</h2>
+<div id="lrt-test" class="section level2" number="2.4">
+<h2 number="2.4"><span class="header-section-number">2.4</span> LRT Test</h2>
 <p>Since the LRT test approximately matches the Wald test when the sample size is relatively large, the Wald test for individual parameters is not carried out. As as aside, the main benefit of using the Wald test is not having to build a separate null model as in the LRT, hence this convenience is nullified given that LRT is carried out nonetheless.</p>
-<div id="lrt-with-null-model" class="section level3">
-<h3>LRT with Null Model</h3>
+<div id="lrt-with-null-model" class="section level3" number="2.4.1">
+<h3 number="2.4.1"><span class="header-section-number">2.4.1</span> LRT with Null Model</h3>
 <p>The likelihood ratio tests <span class="math inline">\(H_{0}\)</span>: reduced model vs <span class="math inline">\(H_{1}\)</span>: full model. Since the difference between log-likelihood statistics for two models (one of which is a special case of the other) follows an approximate <span class="math inline">\(chi^{2}\)</span> distribution, we can find the <span class="math inline">\(chi^{2}\)</span> test statistic for a full vs reduced (some paramters set to zero). The degrees-of-freedom are the number of parameters set to zero in the reduced model. The null hypotheses being tested, in essence, are that the subset of parameters set to zero are actually non-significant for the purposes of estimating the level of passenger satisfaction.</p>
 <p>From the results of the LRT, it is shown that level of satisfaction is statistically (significantly) correlated to the attributes present in the full model, hence the null hypothesis (all attributes coefficients are zero) was disproven</p>
 <!-- rnb-text-end -->
@@ -612,9 +658,8 @@ nullmodel &lt;-  glm(formula = satisfaction ~ 1, family = binomial, data = df_en
 
 lrtest(nullmodel, logmodel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGlrZWxpaG9vZCByYXRpbyB0ZXN0XG5cbk1vZGVsIDE6IHNhdGlzZmFjdGlvbiB+IDFcbk1vZGVsIDI6IHNhdGlzZmFjdGlvbiB+IEdlbmRlciArIEN1c3RvbWVyLlR5cGUgKyBBZ2UgKyBUeXBlLm9mLlRyYXZlbCArIFxuICAgIENsYXNzICsgRmxpZ2h0LkRpc3RhbmNlICsgSW5mbGlnaHQud2lmaS5zZXJ2aWNlICsgRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50ICsgXG4gICAgRWFzZS5vZi5PbmxpbmUuYm9va2luZyArIEdhdGUubG9jYXRpb24gKyBGb29kLmFuZC5kcmluayArIFxuICAgIE9ubGluZS5ib2FyZGluZyArIFNlYXQuY29tZm9ydCArIEluZmxpZ2h0LmVudGVydGFpbm1lbnQgKyBcbiAgICBPbi5ib2FyZC5zZXJ2aWNlICsgTGVnLnJvb20uc2VydmljZSArIEJhZ2dhZ2UuaGFuZGxpbmcgKyBcbiAgICBDaGVja2luLnNlcnZpY2UgKyBJbmZsaWdodC5zZXJ2aWNlICsgQ2xlYW5saW5lc3MgKyBEZXBhcnR1cmUuRGVsYXkuaW4uTWludXRlcyArIFxuICAgIEFycml2YWwuRGVsYXkuaW4uTWludXRlc1xuICAjRGYgTG9nTGlrIERmIENoaXNxIFByKD5DaGlzcSkgICAgXG4xICAgMSAtNzA4ODQgICAgICAgICAgICAgICAgICAgICAgICBcbjIgIDIzIC0zNDk5MiAyMiA3MTc4NSAgPCAyLjJlLTE2ICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG4ifQ== -->
-<pre><code>Likelihood ratio test
-
+<!-- rnb-output-begin eyJkYXRhIjoiXG5Nb2RlbCAxOiBzYXRpc2ZhY3Rpb24gfiAxXG5Nb2RlbCAyOiBzYXRpc2ZhY3Rpb24gfiBHZW5kZXIgKyBDdXN0b21lci5UeXBlICsgQWdlICsgVHlwZS5vZi5UcmF2ZWwgKyBcbiAgICBDbGFzcyArIEZsaWdodC5EaXN0YW5jZSArIEluZmxpZ2h0LndpZmkuc2VydmljZSArIERlcGFydHVyZS5BcnJpdmFsLnRpbWUuY29udmVuaWVudCArIFxuICAgIEVhc2Uub2YuT25saW5lLmJvb2tpbmcgKyBHYXRlLmxvY2F0aW9uICsgRm9vZC5hbmQuZHJpbmsgKyBcbiAgICBPbmxpbmUuYm9hcmRpbmcgKyBTZWF0LmNvbWZvcnQgKyBJbmZsaWdodC5lbnRlcnRhaW5tZW50ICsgXG4gICAgT24uYm9hcmQuc2VydmljZSArIExlZy5yb29tLnNlcnZpY2UgKyBCYWdnYWdlLmhhbmRsaW5nICsgXG4gICAgQ2hlY2tpbi5zZXJ2aWNlICsgSW5mbGlnaHQuc2VydmljZSArIENsZWFubGluZXNzICsgRGVwYXJ0dXJlLkRlbGF5LmluLk1pbnV0ZXMgKyBcbiAgICBBcnJpdmFsLkRlbGF5LmluLk1pbnV0ZXNcblxuTC5SLiBDaGlzcSAgICAgICBkLmYuICAgICAgICAgIFAgXG4gIDcxNzg0LjcyICAgICAgMjIuMDAgICAgICAgMC4wMCBcbiJ9 -->
+<pre><code>
 Model 1: satisfaction ~ 1
 Model 2: satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
     Class + Flight.Distance + Inflight.wifi.service + Departure.Arrival.time.convenient + 
@@ -623,33 +668,31 @@ Model 2: satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel +
     On.board.service + Leg.room.service + Baggage.handling + 
     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes + 
     Arrival.Delay.in.Minutes
-  #Df LogLik Df Chisq Pr(&gt;Chisq)    
-1   1 -70884                        
-2  23 -34992 22 71785  &lt; 2.2e-16 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+
+L.R. Chisq       d.f.          P 
+  71784.72      22.00       0.00 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="lrt-test-with-reduced-model" class="section level3">
-<h3>LRT Test with Reduced Model</h3>
-<p>From the following LRT using only the most significant parameters above. From the results below, we can see that the the level of significance is near zero (however the <span class="math inline">\(\chi^{2}\)</span> statistic shows that the difference in less extreme) Hence the <span class="math inline">\(\beta s\)</span> for the attributes omitted are shown to be non-zero</p>
+<div id="lrt-test-with-reduced-model" class="section level3" number="2.4.2">
+<h3 number="2.4.2"><span class="header-section-number">2.4.2</span> LRT Test with Reduced Model</h3>
+<p>From the following LRT using only the most significant parameters above. From the results below, we can see that the the p-value is near zero with the <span class="math inline">\(\chi^{2}\)</span> statistic shows that the <span class="math inline">\(\beta s\)</span> for the attributes omitted are statistically highly likely to be non-zero</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsbXRlc3QpXG5cbmxvZ21vZGVsLnJlZHVjZWQgPC0gZ2xtKHNhdGlzZmFjdGlvbiB+IFR5cGUub2YuVHJhdmVsICsgQ3VzdG9tZXIuVHlwZSArIENsYXNzICsgSW5mbGlnaHQud2lmaS5zZXJ2aWNlICsgRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50ICsgRWFzZS5vZi5PbmxpbmUuYm9va2luZyArIE9ubGluZS5ib2FyZGluZyArIE9uLmJvYXJkLnNlcnZpY2UgKyBMZWcucm9vbS5zZXJ2aWNlICsgQmFnZ2FnZS5oYW5kbGluZyArIENoZWNraW4uc2VydmljZSArIEluZmxpZ2h0LnNlcnZpY2UgKyBDbGVhbmxpbmVzcywgZmFtaWx5PWJpbm9taWFsLCBkYXRhPWRmX2VuYylcbmxydGVzdChsb2dtb2RlbC5yZWR1Y2VkLCAgbG9nbW9kZWwpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsbXRlc3QpXG5cbmxvZ21vZGVsLnJlZHVjZWQgPC0gZ2xtKHNhdGlzZmFjdGlvbiB+IEdlbmRlciArIFR5cGUub2YuVHJhdmVsICsgQ3VzdG9tZXIuVHlwZSArIENsYXNzICsgSW5mbGlnaHQud2lmaS5zZXJ2aWNlICsgRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50ICsgRWFzZS5vZi5PbmxpbmUuYm9va2luZyArIE9ubGluZS5ib2FyZGluZyArIE9uLmJvYXJkLnNlcnZpY2UgKyBMZWcucm9vbS5zZXJ2aWNlICsgQmFnZ2FnZS5oYW5kbGluZyArIENoZWNraW4uc2VydmljZSArIEluZmxpZ2h0LnNlcnZpY2UgKyBDbGVhbmxpbmVzcywgZmFtaWx5PWJpbm9taWFsLCBkYXRhPWRmX2VuYylcbmxydGVzdChsb2dtb2RlbC5yZWR1Y2VkLCAgbG9nbW9kZWwpXG5gYGAifQ== -->
 <pre class="r"><code>library(lmtest)
 
-logmodel.reduced &lt;- glm(satisfaction ~ Type.of.Travel + Customer.Type + Class + Inflight.wifi.service + Departure.Arrival.time.convenient + Ease.of.Online.booking + Online.boarding + On.board.service + Leg.room.service + Baggage.handling + Checkin.service + Inflight.service + Cleanliness, family=binomial, data=df_enc)
+logmodel.reduced &lt;- glm(satisfaction ~ Gender + Type.of.Travel + Customer.Type + Class + Inflight.wifi.service + Departure.Arrival.time.convenient + Ease.of.Online.booking + Online.boarding + On.board.service + Leg.room.service + Baggage.handling + Checkin.service + Inflight.service + Cleanliness, family=binomial, data=df_enc)
 lrtest(logmodel.reduced,  logmodel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGlrZWxpaG9vZCByYXRpbyB0ZXN0XG5cbk1vZGVsIDE6IHNhdGlzZmFjdGlvbiB+IFR5cGUub2YuVHJhdmVsICsgQ3VzdG9tZXIuVHlwZSArIENsYXNzICsgSW5mbGlnaHQud2lmaS5zZXJ2aWNlICsgXG4gICAgRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50ICsgRWFzZS5vZi5PbmxpbmUuYm9va2luZyArIFxuICAgIE9ubGluZS5ib2FyZGluZyArIE9uLmJvYXJkLnNlcnZpY2UgKyBMZWcucm9vbS5zZXJ2aWNlICsgQmFnZ2FnZS5oYW5kbGluZyArIFxuICAgIENoZWNraW4uc2VydmljZSArIEluZmxpZ2h0LnNlcnZpY2UgKyBDbGVhbmxpbmVzc1xuTW9kZWwgMjogc2F0aXNmYWN0aW9uIH4gR2VuZGVyICsgQ3VzdG9tZXIuVHlwZSArIEFnZSArIFR5cGUub2YuVHJhdmVsICsgXG4gICAgQ2xhc3MgKyBGbGlnaHQuRGlzdGFuY2UgKyBJbmZsaWdodC53aWZpLnNlcnZpY2UgKyBEZXBhcnR1cmUuQXJyaXZhbC50aW1lLmNvbnZlbmllbnQgKyBcbiAgICBFYXNlLm9mLk9ubGluZS5ib29raW5nICsgR2F0ZS5sb2NhdGlvbiArIEZvb2QuYW5kLmRyaW5rICsgXG4gICAgT25saW5lLmJvYXJkaW5nICsgU2VhdC5jb21mb3J0ICsgSW5mbGlnaHQuZW50ZXJ0YWlubWVudCArIFxuICAgIE9uLmJvYXJkLnNlcnZpY2UgKyBMZWcucm9vbS5zZXJ2aWNlICsgQmFnZ2FnZS5oYW5kbGluZyArIFxuICAgIENoZWNraW4uc2VydmljZSArIEluZmxpZ2h0LnNlcnZpY2UgKyBDbGVhbmxpbmVzcyArIERlcGFydHVyZS5EZWxheS5pbi5NaW51dGVzICsgXG4gICAgQXJyaXZhbC5EZWxheS5pbi5NaW51dGVzXG4gICNEZiBMb2dMaWsgRGYgIENoaXNxIFByKD5DaGlzcSkgICAgXG4xICAxNCAtMzUzMzcgICAgICAgICAgICAgICAgICAgICAgICAgXG4yICAyMyAtMzQ5OTIgIDkgNjkxLjIzICA8IDIuMmUtMTYgKioqXG4tLS1cblNpZ25pZi4gY29kZXM6ICAwIOKAmCoqKuKAmSAwLjAwMSDigJgqKuKAmSAwLjAxIOKAmCrigJkgMC4wNSDigJgu4oCZIDAuMSDigJgg4oCZIDFcbiJ9 -->
-<pre><code>Likelihood ratio test
-
-Model 1: satisfaction ~ Type.of.Travel + Customer.Type + Class + Inflight.wifi.service + 
-    Departure.Arrival.time.convenient + Ease.of.Online.booking + 
-    Online.boarding + On.board.service + Leg.room.service + Baggage.handling + 
-    Checkin.service + Inflight.service + Cleanliness
+<!-- rnb-output-begin eyJkYXRhIjoiXG5Nb2RlbCAxOiBzYXRpc2ZhY3Rpb24gfiBHZW5kZXIgKyBUeXBlLm9mLlRyYXZlbCArIEN1c3RvbWVyLlR5cGUgKyBDbGFzcyArIFxuICAgIEluZmxpZ2h0LndpZmkuc2VydmljZSArIERlcGFydHVyZS5BcnJpdmFsLnRpbWUuY29udmVuaWVudCArIFxuICAgIEVhc2Uub2YuT25saW5lLmJvb2tpbmcgKyBPbmxpbmUuYm9hcmRpbmcgKyBPbi5ib2FyZC5zZXJ2aWNlICsgXG4gICAgTGVnLnJvb20uc2VydmljZSArIEJhZ2dhZ2UuaGFuZGxpbmcgKyBDaGVja2luLnNlcnZpY2UgKyBJbmZsaWdodC5zZXJ2aWNlICsgXG4gICAgQ2xlYW5saW5lc3Ncbk1vZGVsIDI6IHNhdGlzZmFjdGlvbiB+IEdlbmRlciArIEN1c3RvbWVyLlR5cGUgKyBBZ2UgKyBUeXBlLm9mLlRyYXZlbCArIFxuICAgIENsYXNzICsgRmxpZ2h0LkRpc3RhbmNlICsgSW5mbGlnaHQud2lmaS5zZXJ2aWNlICsgRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50ICsgXG4gICAgRWFzZS5vZi5PbmxpbmUuYm9va2luZyArIEdhdGUubG9jYXRpb24gKyBGb29kLmFuZC5kcmluayArIFxuICAgIE9ubGluZS5ib2FyZGluZyArIFNlYXQuY29tZm9ydCArIEluZmxpZ2h0LmVudGVydGFpbm1lbnQgKyBcbiAgICBPbi5ib2FyZC5zZXJ2aWNlICsgTGVnLnJvb20uc2VydmljZSArIEJhZ2dhZ2UuaGFuZGxpbmcgKyBcbiAgICBDaGVja2luLnNlcnZpY2UgKyBJbmZsaWdodC5zZXJ2aWNlICsgQ2xlYW5saW5lc3MgKyBEZXBhcnR1cmUuRGVsYXkuaW4uTWludXRlcyArIFxuICAgIEFycml2YWwuRGVsYXkuaW4uTWludXRlc1xuXG5MLlIuIENoaXNxICAgICAgIGQuZi4gICAgICAgICAgUCBcbiAgNjg1LjQ2MTcgICAgIDguMDAwMCAgICAgMC4wMDAwIFxuIn0= -->
+<pre><code>
+Model 1: satisfaction ~ Gender + Type.of.Travel + Customer.Type + Class + 
+    Inflight.wifi.service + Departure.Arrival.time.convenient + 
+    Ease.of.Online.booking + Online.boarding + On.board.service + 
+    Leg.room.service + Baggage.handling + Checkin.service + Inflight.service + 
+    Cleanliness
 Model 2: satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
     Class + Flight.Distance + Inflight.wifi.service + Departure.Arrival.time.convenient + 
     Ease.of.Online.booking + Gate.location + Food.and.drink + 
@@ -657,24 +700,22 @@ Model 2: satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel +
     On.board.service + Leg.room.service + Baggage.handling + 
     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes + 
     Arrival.Delay.in.Minutes
-  #Df LogLik Df  Chisq Pr(&gt;Chisq)    
-1  14 -35337                         
-2  23 -34992  9 691.23  &lt; 2.2e-16 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+
+L.R. Chisq       d.f.          P 
+  685.4617     8.0000     0.0000 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 </div>
-<div id="testing-for-adequacy-r2" class="section level2">
-<h2>Testing for Adequacy (<span class="math inline">\(R^{2}\)</span>)</h2>
+<div id="testing-for-adequacy-r2" class="section level2" number="2.5">
+<h2 number="2.5"><span class="header-section-number">2.5</span> Testing for Adequacy (<span class="math inline">\(R^{2}\)</span>)</h2>
 <p>The standard <em>goodness-of-fit</em> statistic for OLS regression <span class="math inline">\(R^{2}\)</span> (also called the coefficient of determination). The higher this value, the better the <strong>fit</strong> of the model. <span class="math inline">\(R^{2}\)</span> is defined as: <span class="math display">\[
   R^{2} = \frac{\text{Total Sum of Squares} - \text{Residual Sum of Squares}}{\text{Total Sum of Squares}}
-\]</span> However, <span class="math inline">\(R^{2}\)</span> is not appropriate for use with the logistic model, since it does not inform about the variability accounted for in the model, nor does it provide information to decide between models. Hence, a pseudo-<span class="math inline">\(R^{2}\)</span> variation is used. From the resulting value, it is seen that the model is borderline adequate</p>
+\]</span> However, <span class="math inline">\(R^{2}\)</span> is not appropriate for use with the logistic model [1], since it does not inform about the variability accounted for in the model, nor does it provide information to decide between models. Hence, a pseudo-<span class="math inline">\(R^{2}\)</span> variation is used. From the resulting value, it is seen that the model is borderline adequate</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShybXMpXG5cbmxsLm51bGwgPC0gbG9nbW9kZWwkbnVsbC5kZXZpYW5jZS8tMlxubGwucHJvcG9zZWQgPC0gbG9nbW9kZWwkZGV2aWFuY2UvLTJcblxucl9zcXVhcmVkIDwtIChsbC5udWxsIC0gbGwucHJvcG9zZWQpIC8gbGwubnVsbFxuXG5yX3NxdWFyZWRcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShybXMpXG5cbmxsLm51bGwgPC0gbG9nbW9kZWwkbnVsbC5kZXZpYW5jZS8tMlxubGwucHJvcG9zZWQgPC0gbG9nbW9kZWwkZGV2aWFuY2UvLTJcblxucl9zcXVhcmVkIDwtIChsbC5udWxsIC0gbGwucHJvcG9zZWQpIC8gbGwubnVsbFxuXG5wcmludChyX3NxdWFyZWQpXG5gYGAifQ== -->
 <pre class="r"><code>require(rms)
 
 ll.null &lt;- logmodel$null.deviance/-2
@@ -682,10 +723,28 @@ ll.proposed &lt;- logmodel$deviance/-2
 
 r_squared &lt;- (ll.null - ll.proposed) / ll.null
 
-r_squared</code></pre>
+print(r_squared)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNTA2MzUzNlxuIn0= -->
 <pre><code>[1] 0.5063536</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Comparing fit to the reduced model above, the <span class="math inline">\(R^{2}\)</span> value was lower than that of the above,</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShybXMpXG5cbmxsLm51bGwgPC0gbG9nbW9kZWwkbnVsbC5kZXZpYW5jZS8tMlxubGwucHJvcG9zZWQgPC0gbG9nbW9kZWwucmVkdWNlZCRkZXZpYW5jZS8tMlxuXG5yX3NxdWFyZWQgPC0gKGxsLm51bGwgLSBsbC5wcm9wb3NlZCkgLyBsbC5udWxsXG5cbnByaW50KHJfc3F1YXJlZClcbmBgYCJ9 -->
+<pre class="r"><code>require(rms)
+
+ll.null &lt;- logmodel$null.deviance/-2
+ll.proposed &lt;- logmodel.reduced$deviance/-2
+
+r_squared &lt;- (ll.null - ll.proposed) / ll.null
+
+print(r_squared)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNTAxNTE4NVxuIn0= -->
+<pre><code>[1] 0.5015185</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -697,12 +756,17 @@ r_squared</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="applicationevaluation" class="section level2" number="2.6">
+<h2 number="2.6"><span class="header-section-number">2.6</span> Application/Evaluation</h2>
 <p>Although non-standard practice, for the purpose of prediction/application, a training tuple will be used to determine the likeliness of ‘success’ (passenger being satisfied)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdChnZXQobW9kZWwpLCBuZXdkYXRhKVxuXG5gYGAifQ== -->
-<pre class="r"><code>predict(get(model), newdata)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWwgPSBsb2FkKCAnbW9kZWwuUkRhdGEnKVxuXG5uZXdkYXRhID0gZGZfZW5jWzEsIF1cbnByZWRpY3QoZ2V0KG1vZGVsKSwgbmV3ZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>model = load( &#39;model.RData&#39;)
+
+newdata = df_enc[1, ]
+predict(get(model), newdata)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgMSBcbi0wLjkyMDc3MjUgXG4ifQ== -->
 <pre><code>         1 
@@ -713,19 +777,46 @@ r_squared</code></pre>
 <p>Given the above prediction, we can re-check the original dataframe, given that the above prediction was less than zero, the logistic regression model would have correctly classified the tuple into the ‘not satisified/neutral’ category</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGZfZW5jWzEsbmNvbChkZl9lbmMpXVxuXG5gYGAifQ== -->
-<pre class="r"><code>df_enc[1,ncol(df_enc)]
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGZfZW5jWzEsbmNvbChkZl9lbmMpXVxuYGBgIn0= -->
+<pre class="r"><code>df_enc[1,ncol(df_enc)]</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDBcbiJ9 -->
 <pre><code>[1] 0</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>In order to evaluate the model further, the accuracy was found to be: <span class="math display">\[
+  Accuracy = \frac{53102 + 37382}{53102 + 37382 + 5595 + 7515} = \frac{90484}{103594} = 0.8734483
+\]</span></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZC5wcm9iID0gcHJlZGljdChsb2dtb2RlbCxkZl9lbmMsIHR5cGU9XCJyZXNwb25zZVwiKVxucHJlZC5wcm9iID0gaWZlbHNlKHByZWQucHJvYiA+IDAuNSwgMSwgMClcbnRhYmxlKHByZWQucHJvYiwgZGZfZW5jJHNhdGlzZmFjdGlvbilcbmBgYCJ9 -->
+<pre class="r"><code>pred.prob = predict(logmodel,df_enc, type=&quot;response&quot;)
+pred.prob = ifelse(pred.prob &gt; 0.5, 1, 0)
+table(pred.prob, df_enc$satisfaction)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgXG5wcmVkLnByb2IgICAgIDAgICAgIDFcbiAgICAgICAgMCA1MzEwMiAgNzUxNVxuICAgICAgICAxICA1NTk1IDM3MzgyXG4ifQ== -->
+<pre><code>         
+pred.prob     0     1
+        0 53102  7515
+        1  5595 37382</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="conclusion" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Conclusion</h1>
+<p>It was found that reducing the original (full) model did not improve fit (according to <span class="math inline">\(R^{2}\)</span> statistic for Logistic Regression models). An interesting correlation was found that the convenience of flight departure time was found to negatively correlate with passenger satisfaction. This however, in retrospect, may be less surprising than it originally seems owing to the presence of all other predictor variables. Another unforeseen result was the relative lack of importance regarding flight distance to passenger satisfaction, in terms of both statistical significance (highest p-value) and estimated coefficient (lowest)</p>
+</div>
+<div id="references" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> References</h1>
+<p>[1] Hilbe, J. (2017). Analysis of Model Fit. In Logistic regression models. Boca Raton: Routledge, Taylor &amp; Francis Group<br />
+[2] <a href="https://www.kaggle.com/teejmahal20/airline-passenger-satisfaction" class="uri">https://www.kaggle.com/teejmahal20/airline-passenger-satisfaction</a></p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWlybGluZSBQYXNzZW5nZXIgU2F0aXNmYWN0aW9uIgpvdXRwdXQ6CiAgcGRmX2RvY3VtZW50OiBkZWZhdWx0CiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAotLS0KIyMgTG9hZGluZyBhbmQgUHJlcHJvY2Vzc2luZwoKRmlyc3RseSwgdGhlIENTViBmaWxlIGlzIGxvYWRlZCBpbnRvIGEgdmFyaWFibGUgY2FsbGVkIGRmLCBhbmQgdGhlIGZpcnN0IGZldyByb3dzIGFyZSBwcmV2aWV3ZWQgdXNpbmcgdGhlIGhlYWQgZnVuY3Rpb24KCmBgYHtyfQpsaWJyYXJ5KCJrbml0ciIpCgpkZiA8LSByZWFkLmNzdignZGF0YS90cmFpbi5jc3YnKQpkZiA8LSBkZltjb21wbGV0ZS5jYXNlcyhkZiksIF0KaGVhZChkZikKYGBgCkFmdGVyIHZpZXdpbmcgdGhlIGFib3ZlLCB0aGUgcGFyYW1ldGVyIHRvIGJlIHByZWRpY3RlZCBpcyB0aGUgbGV2ZWwgb2YgcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbi4gQWxsIGRpc2NyZXRlIHZhbHVlcyAob3IgbGV2ZWxzKSBhcmUgZm91bmQgYmVsb3cKYGBge3J9CmxhYmVscyA9IHN1YnNldChkZiwgc2VsZWN0PSJzYXRpc2ZhY3Rpb24iKQp1bmlxdWUobGFiZWxzKQpgYGAKClVubmVjZXNzYXJ5IGNvbHVtbnMgYXJlIHJlbW92ZWQsIGZyb20gdGhlIGFib3ZlLCBYIGFuZCBpZCBkbyBub3Qgc2VlbSB0byBjb250cmlidXRlIG1lYW5pbmdmdWwgaW5mb3JtYXRpb24gdG8gdGhlIGRhdGFzZXQsIGFuZCBhcmUgc3Vic2VxdWVudGx5IHBydW5lZCwgd2UgZnVydGhlciBleHBsb3JlIHRoZSBzdHJ1Y3R1cmUgb2YgZGF0YSBpbiBvcmRlciB0byBnZXQgYSBiZXR0ZXIgaWRlYSBvZiBkYXRhdHlwZXMgYW5kIHZhbHVlZXMKCmBgYHtyfQpkZiA8LSBzdWJzZXQoZGYsIHNlbGVjdD0tYyhYLCBpZCkpCnN0cihkZikKYGBgCgpGb2xsb3dpbmcgbnVtZXJpYyBlbmNvZGluZywgUiBleHBlY3RzIHZhcmlhYmxlcyB0byBiZSBvZiB0eXBlIGZhY3RvciBmb3IgTG9naXN0aWMgUmVncmVzc2lvbiB0byBiZSBwZXJmb3JtZWQsIHRoaXMgaXMgZG9uZSBuZXh0LiBGcm9tIHRoZSBvdXRwdXQgdGhhdCBmb2xsb3dzLCB0aGUgZGF0YWZyYW1lIHdhcyBzdWNjZXNzZnVsbHkgY29udmVydGVkIGludG8gbGV2ZWxzIHdpdGggbm8gTkFzIGludHJvZHVjZWQgYnkgY29lcmNpb24gZXJyb3JzIHRocm93aAoKYGBge3J9CmRmX2VuYyA9IGRmCgpkZl9lbmMkR2VuZGVyID0gYXMubnVtZXJpYyhmYWN0b3IoZGZfZW5jJEdlbmRlciwgbGV2ZWxzID0gYygiTWFsZSIsIkZlbWFsZSIpLCBsYWJlbHMgPSBjKDAsIDEpKSkKZGZfZW5jJEN1c3RvbWVyLlR5cGUgPSBhcy5udW1lcmljKGZhY3RvcihkZl9lbmMkQ3VzdG9tZXIuVHlwZSwgbGV2ZWxzID0gYygiTG95YWwgQ3VzdG9tZXIiLCAiZGlzbG95YWwgQ3VzdG9tZXIiKSwgbGFiZWxzID0gYygxLCAwKSkpCmRmX2VuYyRUeXBlLm9mLlRyYXZlbCA9IGFzLm51bWVyaWMoZmFjdG9yKGRmX2VuYyRUeXBlLm9mLlRyYXZlbCwgbGV2ZWxzID0gYygiUGVyc29uYWwgVHJhdmVsIiwgIkJ1c2luZXNzIHRyYXZlbCIpLCBsYWJlbHMgPSBjKDEsIDApKSkKZGZfZW5jJENsYXNzID0gYXMubnVtZXJpYyhmYWN0b3IoZGZfZW5jJENsYXNzLCBsZXZlbHMgPSBjKCJFY28gUGx1cyIsICJCdXNpbmVzcyIsICJFY28iKSwgbGFiZWxzID0gYygwLCAxLCAyKSkpCgoKCmRmX2VuYyRBZ2UgPSBhcy5udW1lcmljKGRmX2VuYyRBZ2UpCmRmX2VuYyRUeXBlLm9mLlRyYXZlbCA9IGFzLm51bWVyaWMoZGZfZW5jJFR5cGUub2YuVHJhdmVsKQpkZl9lbmMkQ2xhc3MgPSBhcy5udW1lcmljKGRmX2VuYyRDbGFzcykKZGZfZW5jJEZsaWdodC5EaXN0YW5jZSA9YXMubnVtZXJpYyhkZl9lbmMkRmxpZ2h0LkRpc3RhbmNlKQpkZl9lbmMkSW5mbGlnaHQud2lmaS5zZXJ2aWNlID0gYXMubnVtZXJpYyhkZl9lbmMkSW5mbGlnaHQud2lmaS5zZXJ2aWNlKQpkZl9lbmMkRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50ID0gYXMubnVtZXJpYyhkZl9lbmMkRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50KQpkZl9lbmMkRWFzZS5vZi5PbmxpbmUuYm9va2luZyA9IGFzLm51bWVyaWMoZGZfZW5jJEVhc2Uub2YuT25saW5lLmJvb2tpbmcpCmRmX2VuYyRHYXRlLmxvY2F0aW9uID0gYXMubnVtZXJpYyhkZl9lbmMkR2F0ZS5sb2NhdGlvbikKZGZfZW5jJEZvb2QuYW5kLmRyaW5rID0gYXMubnVtZXJpYyhkZl9lbmMkRm9vZC5hbmQuZHJpbmspCmRmX2VuYyRPbmxpbmUuYm9hcmRpbmcgPSBhcy5udW1lcmljKGRmX2VuYyRPbmxpbmUuYm9hcmRpbmcpCmRmX2VuYyRJbmZsaWdodC5lbnRlcnRhaW5tZW50ID0gYXMubnVtZXJpYyhkZl9lbmMkSW5mbGlnaHQuZW50ZXJ0YWlubWVudCkKZGZfZW5jJE9uLmJvYXJkLnNlcnZpY2UgPSBhcy5udW1lcmljKGRmX2VuYyRPbi5ib2FyZC5zZXJ2aWNlKQpkZl9lbmMkTGVnLnJvb20uc2VydmljZSA9IGFzLm51bWVyaWMoZGZfZW5jJExlZy5yb29tLnNlcnZpY2UpCmRmX2VuYyRCYWdnYWdlLmhhbmRsaW5nID0gYXMubnVtZXJpYyhkZl9lbmMkQmFnZ2FnZS5oYW5kbGluZykKZGZfZW5jJENoZWNraW4uc2VydmljZSA9IGFzLm51bWVyaWMoZGZfZW5jJENoZWNraW4uc2VydmljZSkKZGZfZW5jJEluZmxpZ2h0LnNlcnZpY2UgPSBhcy5udW1lcmljKGRmX2VuYyRJbmZsaWdodC5zZXJ2aWNlKQpkZl9lbmMkQ2xlYW5saW5lc3MgPSBhcy5udW1lcmljKGRmX2VuYyRDbGVhbmxpbmVzcykKZGZfZW5jJERlcGFydHVyZS5EZWxheS5pbi5NaW51dGVzID0gYXMubnVtZXJpYyhkZl9lbmMkRGVwYXJ0dXJlLkRlbGF5LmluLk1pbnV0ZXMpCmRmX2VuYyRBcnJpdmFsLkRlbGF5LmluLk1pbnV0ZXMgPSBhcy5udW1lcmljKGRmX2VuYyRBcnJpdmFsLkRlbGF5LmluLk1pbnV0ZXMpCgpkZl9lbmMkc2F0aXNmYWN0aW9uIDwtIGlmZWxzZSh0ZXN0PWRmX2VuYyRzYXRpc2ZhY3Rpb24gPT0gJ3NhdGlzZmllZCcsIHllcz0xLCBubz0wKQoKCnN0cihkZl9lbmMpCgpgYGAKIyMgQ29ycmVsYXRpb24gQW5hbHlzaXMKCkNvcnJlbGF0aW9uIGFuYWx5c2lzIGlzIHBlcmZvcm1lZCB0byBkZXRlcm1pbmUgcGFpcndpc2UgY29ycmVsYXRpb25zIHdpdGhpbiB0aGUgZGF0YXNldC4gU2luY2Ugd2UgYXJlIGNvbmNlcm5lZCBtYWlubHkgd2l0aCBsaW5lYXIgcmVsYXRpb25zLCB0aGUgUGVhcnNvbiBjb3JyZWxhdGlvbiBjb2VmZmljaWVudCBpcyB1c2VkIGluIG9yZGVyIHRvIGRldGVybWluZSB0aGUgZXh0ZW50IG9mIGNvcnJlbGF0aW9uIGFtb25nc3QgdGhlIGF0dHJpYnV0ZXMsIHRoaXMgaXMgdmlzdWFsaXNlZCB1c2luZyBhIGNvcnJlbGF0aW9uIGhlYXRtYXAgYmVsb3cKCmBgYHtyfQpsaWJyYXJ5KHJlc2hhcGUyKQpsaWJyYXJ5KGdncGxvdDIpCgpjb3JfbWF0cml4IDwtIGNvcihkZl9lbmMpCmNvcl9tYXRyaXhbbG93ZXIudHJpKGNvcl9tYXRyaXgpXTwtIE5BCmNvcl9tYXRyaXhfbWVsdGVkIDwtIG1lbHQoY29yX21hdHJpeCwgbmEucm0gPSBUUlVFKQoKCmdncGxvdChkYXRhID0gY29yX21hdHJpeF9tZWx0ZWQsIGFlcyhWYXIyLCBWYXIxLCBmaWxsID0gdmFsdWUpKSsKIGdlb21fdGlsZShjb2xvciA9ICJ3aGl0ZSIpKwogc2NhbGVfZmlsbF9ncmFkaWVudDIobG93ID0gImJsdWUiLCBoaWdoID0gInJlZCIsIG1pZCA9ICJ3aGl0ZSIsIAogICBtaWRwb2ludCA9IDAsIGxpbWl0ID0gYygtMSwxKSwgc3BhY2UgPSAiTGFiIiwgCiAgIG5hbWU9IlBlYXJzb25cbkNvcnJlbGF0aW9uIikgKwogIHRoZW1lX21pbmltYWwoKSsgCiB0aGVtZShheGlzLnRleHQueCA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDkwLCB2anVzdCA9IDEsIAogICAgc2l6ZSA9IDEwLCBoanVzdCA9IDEpKSsKIGNvb3JkX2ZpeGVkKCkKYGBgCiMjIExvZ2lzdGljIEdMTQoKTm93IHRoZSBsb2dpdC1tb2RlbCBzaGFsbCBiZSBidWlsdCB1c2luZyB0aGUgR0xNIHN5bnRheCwgd2l0aCBzdW1tYXJ5IGJlaW5nIGNhbGxlZCB0byBkaXNwbGF5IHQtdmFsdWVzLCBQLXZhbHVlcyBlc3RpbWF0ZWQgY29lZmZpY2llbnRzIGFuZCB0aGUgYXNzb2NpYXRlZCBlcnJvcnMKCkdvaW5nIHRocm91Z2ggdGhlIGNvZWZmaWNlbnRzIHRoYXQgZm9sbG93LHRoZSBvbmx5IGZhY3RvcnMgd2hpY2ggd2VyZSBub3Qgc2lnbmlmaWNhbnRseSBjb3JyZWxhdGVkIHRvIHNhdGlzZmFjdGlvbiB3YXMgZmxpZ2h0IGRpc3RhbmNlLiBJdCBzZWVtZWQgdGhhdCBhbGwgb3RoZXIgZmFjdG9ycyBleGhpYml0ZWQgc29tZSBsZXZlbCBvZiBsaW5lYXIgY29ycmVsYXRpb24gd2l0aCB0aGUgcmVzcG9uc2UgdmFyaWFibGUuIEhvd2V2ZXIsIGEgaGlnaCBsZXZlbCBvZiBzaWduaWZpY2FuY2UgZG9lcyBub3QgYWxvbmUgbWFrZSBhbiBhdHRyaWJ1dGUgc3RhdGlzdGljYWxseSAnaW50ZXJlc3RpbmcnLiBGb2xsb3dpbmcgdGhlIGxldmVscyBvZiBlc3RpbWF0ZWQgY29ycmVsYXRpb24sIHRoZSBhdHRyaWJ1dGVzIHdpdGggdGhlIGhpZ2hlc3QgY29lZmZpY2llbnRzIGFyZSBhcyBmb2xsb3dzIChpbiBkZXNjZW5kaW5nIG1hZ25pdHVkZSBvZiBlc3RpbWF0ZWQgY29lZmZpY2llbnQpOgoKIyMjIEV4cGxhbmF0aW9uIG9mIENvZWZmaWNpZW50cwoKQXR0cmlidXRlIHwgQ29tbWVudHMKLS0tLS0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tLS0tLQpHZW5kZXIgfCBQb3NpdGl2ZWx5IGNvcnJlbGF0ZWQsIHdoaWNoIG1heSBpbXBseSB0aGF0IG1hbGUgY3VzdG9tZXJzIGFyZSBvdmVyYWxseSBtb3JlIHNhdGlzZmllZApUeXBlIG9mIFRyYXZlbCB8IEl0IHNlZW1zIHRoYXQgcGVyc29uYWwgdHJhdmVsIHdhcyBtb3JlIHBvc2l0aXZlbHkgY29ycmVsYXRlZCB3aXRoIHBhc3NlbmdlciBzYXRpc2ZhY3Rpb24gdGhhbiBidXNpbmVzcyB0cmF2ZWwKQ3VzdG9tZXIuVHlwZSB8IE5lZ2F0aXZlIGNvcnJlbGF0aW9uIGltcGxpZXMgdGhhdCBsb3lhbCBjdXN0b21lcnMgbWF5IGJlIG92ZXJhbGx5IGxlc3Mgc2F0aXNmaWVkIHdpdGggdGhlaXIgZmxpZ2h0CkNsYXNzIHwgUG9zaXRpdmUgY29ycmVsYXRpb24gbWF5IGluZGljYXRlIHRoYXQgY3VzdG9tZXJzIGluIHVwcGVyIGNsYXNzZXMgbWF5IGJlIGxlc3Mgc2F0aXNmaWVkIHdpdGggdGhlIGFpcmxpbmUncyBzZXJ2aWNlCkluZmxpZ2h0LndpZmkuc2VydmljZSB8IHRoZSBwb3NpdGl2ZSBjb2VmZmljaWVudCBoZXJlIG1heSBpbmRpY2F0ZSB0aGF0IGhhdmluZyBpbmZsaWdodCB3aWZpIG1heSBoYXZlIGEgcG9pc3RpdmUgZWZmZWN0IG9uIGN1c3RvbWVyIHNhdGlzZmNhdGlvbgpPbmxpbmUuYm9hcmRpbmcgfCBUaGUgcG9zaXRpdmUgY29lZmZpY2llbnQgaW5kaWNhdGVzIHRoYXQgaGF2aW5nIHRoZSBvcHRpb24gZm9yIG9ubGluZSBib2FyZGluZyAgcHJlLWZsaWdodCBtYXkgaW5jcmVhc2UgcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbgpDaGVja2luLnNlcnZpY2UgfCBTaW1pbGFyIHRvIHRoZSBhYm92ZSwgdGhlIHF1YWxpdHkgb2YgY2hlY2tpbi1zZXJ2aWNlIG1heSBwb3NpdHZlbHkgY29ycmVsYXRlIHRvIHBhc3NlbmdlciBzYXRpc2ZhY3Rpb24KTGVnLnJvb20uc2VydmljZSB8IHRoZSBhbW91bnQgb2YgbGVnLXJvb20gYXZhaWxhYmxlIGFsc28gd2FzIHBvc2l0aXZlbHkgY29ycmVsYXRlZCB0byBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uLCB0aGlzIG1heSB0cmFuc2xhdGUgdG8gcGFzc2VuZ2VycyBiZWluZyBvdmVyYWxseSBtb3JlIHNhdGlzZmllZCB3aXRoIG1vcmUgbGVncm9vbQpDbGVhbmxpbmVzcyB8IHRoZSBsZXZlbCBvZiAoc3ViamVjdGl2ZSkgY2xlYW5saW5lc3Mgd2FzIGZvdW5kIHRvIGFsc28gcG9zaXRpdmVseSBpbXBhY3QgYSBwYXNzZW5nZXIncyBzYXRpc2ZhY3Rpb24gd2l0aCB0aGVpciBmbGlnaHQgZXhwZXJpZW5jZQpPbi5ib2FyZC5zZXJ2aWNlIHwgc2ltaWxhciB0byBsZWctcm9vbSBzZXJ2aWNlLCB0aGUgcXVhbGl0eSBvZiBzZXJ2aWNlIChwcmVzdW1hYmx5IGZyb20gZmxpZ2h0LWF0dGVuZGFuY2UgZHVyaW5nIHRoZSBmbGlnaHQpIHdhcyBmb3VuZCB0byBwb3NpdGl2ZWx5IGluZmx1ZW5jZSBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uCkVhc2Uub2YuT25saW5lLmJvb2tpbmcgfCB0aGlzIHdhcyBmb3VuZCB0byBuZWdhdGl2ZWx5IGNvcnJlbGF0ZSB3aXRoIHBhc3NlbmdlciBzYXRpc2ZhY3Rpb24KQmFnZ2FnZS5oYW5kbGluZyB8IHRoZSBxdWFsaXR5IG9mIGJhZ2dhZ2UgaGFuZGxpbmcgd2FzIGFsc28gZm91bmQgdG8gcG9zaXRpdmVseSBpbXBhY3QgcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbiBsZXZlbHMKRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50IHwgc3RyYW5nZWx5LCB0aGUgY29udmVuaWVuY2Ugb2YgYXJyaXZhbCB0aW1lIHdhcyBmb3VuZCB0byBuZWdhdGl2ZWx5IGNvcnJlbGF0ZSB3aXRoIHBhc3NlbmdlciBzYXRpc2ZhY3Rpb24sIHRoaXMgbWF5IHByb292ZSBhbiBpbnRlcmVzdGluZyBhcmVhIG9mIHJlc2VhcmNoCkluZmxpZ2h0LnNlcnZpY2UgfCBGaW5hbGx5LCB0aGUgcXVhbGl0eSBvZiBpbmZsaWdodCBzZXJ2aWNlIChtZWRpYSwgZXRjKSB3YXMgZm91bmQgdG8gcG9zaXRpdmVseSBpbXBhY3QgYSBwYXNzZW5nZXIncyBsZXZlbCBvZiBzYXRpc2ZhY3Rpb24gb24gYSBmbGlnaHQKIAogCgpgYGB7cn0KbG9nbW9kZWwgPC0gZ2xtKAogIHNhdGlzZmFjdGlvbiB+IC4sIGZhbWlseSA9IGJpbm9taWFsLCBkYXRhID0gIGRmX2VuYwopCnN1bW1hcnkobG9nbW9kZWwpCmBgYAoKIyMjIENvbmZpZGVuY2UgSW50ZXJ2YWxzClRoZSBjb25maWRlbmNlIGludGVydmFscyBmb3IgdGhlIHBhcmFtZXRlcnMgYXQgbGV2ZWwgMC45NSBhcmUgZm91bmQgdXNpbmcgdGhlIGNvbmZpbnQtZnVuY3Rpb24gYXMgc2hvd24gYmVsb3cKYGBge3J9CmNvbmZpbnQobG9nbW9kZWwsIGxldmVsID0gMC45NSkKYGBgCiMjIyBDb25maWRlbmNlIEludGVydmFscyBmb3IgT2RkcyBSYXRpbwpgYGB7cn0KZXhwKGNvbmZpbnQobG9nbW9kZWwsIGxldmVsID0gMC45NSkpCmBgYAojIyBMUlQgVGVzdAoKU2luY2UgdGhlIExSVCB0ZXN0IGFwcHJveGltYXRlbHkgbWF0Y2hlcyB0aGUgV2FsZCB0ZXN0IHdoZW4gdGhlIHNhbXBsZSBzaXplIGlzIHJlbGF0aXZlbHkgbGFyZ2UsIHRoZSBXYWxkIHRlc3QgZm9yIGluZGl2aWR1YWwgcGFyYW1ldGVycyBpcyBub3QgY2FycmllZCBvdXQuIEFzIGFzIGFzaWRlLCB0aGUgbWFpbiBiZW5lZml0IG9mIHVzaW5nIHRoZSBXYWxkIHRlc3QgaXMgbm90IGhhdmluZyB0byBidWlsZCBhIHNlcGFyYXRlIG51bGwgbW9kZWwgYXMgaW4gdGhlIExSVCwgaGVuY2UgdGhpcyBjb252ZW5pZW5jZSBpcyBudWxsaWZpZWQgZ2l2ZW4gdGhhdCBMUlQgaXMgY2FycmllZCBvdXQgbm9uZXRoZWxlc3MuCgojIyMgTFJUIHdpdGggTnVsbCBNb2RlbAoKVGhlIGxpa2VsaWhvb2QgcmF0aW8gdGVzdHMgJEhfezB9JDogcmVkdWNlZCBtb2RlbCB2cyAkSF97MX0kOiBmdWxsIG1vZGVsLiBTaW5jZSB0aGUgZGlmZmVyZW5jZSBiZXR3ZWVuIGxvZy1saWtlbGlob29kIHN0YXRpc3RpY3MgZm9yIHR3byBtb2RlbHMgKG9uZSBvZiB3aGljaCBpcyBhIHNwZWNpYWwgY2FzZSBvZiB0aGUgb3RoZXIpIGZvbGxvd3MgYW4gYXBwcm94aW1hdGUgJGNoaV57Mn0kIGRpc3RyaWJ1dGlvbiwgd2UgY2FuIGZpbmQgdGhlICRjaGleezJ9JCB0ZXN0IHN0YXRpc3RpYyBmb3IgYSBmdWxsIHZzIHJlZHVjZWQgKHNvbWUgcGFyYW10ZXJzIHNldCB0byB6ZXJvKS4gVGhlIGRlZ3JlZXMtb2YtZnJlZWRvbSBhcmUgdGhlIG51bWJlciBvZiBwYXJhbWV0ZXJzIHNldCB0byB6ZXJvIGluIHRoZSByZWR1Y2VkIG1vZGVsLiBUaGUgbnVsbCBoeXBvdGhlc2VzIGJlaW5nIHRlc3RlZCwgaW4gZXNzZW5jZSwgYXJlIHRoYXQgdGhlIHN1YnNldCBvZiBwYXJhbWV0ZXJzIHNldCB0byB6ZXJvIGFyZSBhY3R1YWxseSBub24tc2lnbmlmaWNhbnQgZm9yIHRoZSBwdXJwb3NlcyBvZiBlc3RpbWF0aW5nIHRoZSBsZXZlbCBvZiBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uLgoKRnJvbSB0aGUgcmVzdWx0cyBvZiB0aGUgTFJULCBpdCBpcyBzaG93biB0aGF0IGxldmVsIG9mIHNhdGlzZmFjdGlvbiBpcyBzdGF0aXN0aWNhbGx5IChzaWduaWZpY2FudGx5KSBjb3JyZWxhdGVkIHRvIHRoZSBhdHRyaWJ1dGVzIHByZXNlbnQgaW4gdGhlIGZ1bGwgbW9kZWwsIGhlbmNlIHRoZSBudWxsIGh5cG90aGVzaXMgKGFsbCBhdHRyaWJ1dGVzIGNvZWZmaWNpZW50cyBhcmUgemVybykgd2FzIGRpc3Byb3ZlbgoKYGBge3J9CmxpYnJhcnkobG10ZXN0KQoKbnVsbG1vZGVsIDwtICBnbG0oZm9ybXVsYSA9IHNhdGlzZmFjdGlvbiB+IDEsIGZhbWlseSA9IGJpbm9taWFsLCBkYXRhID0gZGZfZW5jKQoKbHJ0ZXN0KG51bGxtb2RlbCwgbG9nbW9kZWwpCmBgYAojIyMgTFJUIFRlc3Qgd2l0aCBSZWR1Y2VkIE1vZGVsCkZyb20gdGhlIGZvbGxvd2luZyBMUlQgdXNpbmcgb25seSB0aGUgbW9zdCBzaWduaWZpY2FudCBwYXJhbWV0ZXJzIGFib3ZlLiBGcm9tIHRoZSByZXN1bHRzIGJlbG93LCB3ZSBjYW4gc2VlIHRoYXQgdGhlIHRoZSBsZXZlbCBvZiBzaWduaWZpY2FuY2UgaXMgbmVhciB6ZXJvIChob3dldmVyIHRoZSAkXGNoaV57Mn0kIHN0YXRpc3RpYyBzaG93cyB0aGF0IHRoZSBkaWZmZXJlbmNlIGluIGxlc3MgZXh0cmVtZSkgSGVuY2UgdGhlICRcYmV0YSBzJCBmb3IgdGhlIGF0dHJpYnV0ZXMgb21pdHRlZCBhcmUgc2hvd24gdG8gYmUgbm9uLXplcm8KYGBge3J9CmxpYnJhcnkobG10ZXN0KQoKbG9nbW9kZWwucmVkdWNlZCA8LSBnbG0oc2F0aXNmYWN0aW9uIH4gVHlwZS5vZi5UcmF2ZWwgKyBDdXN0b21lci5UeXBlICsgQ2xhc3MgKyBJbmZsaWdodC53aWZpLnNlcnZpY2UgKyBEZXBhcnR1cmUuQXJyaXZhbC50aW1lLmNvbnZlbmllbnQgKyBFYXNlLm9mLk9ubGluZS5ib29raW5nICsgT25saW5lLmJvYXJkaW5nICsgT24uYm9hcmQuc2VydmljZSArIExlZy5yb29tLnNlcnZpY2UgKyBCYWdnYWdlLmhhbmRsaW5nICsgQ2hlY2tpbi5zZXJ2aWNlICsgSW5mbGlnaHQuc2VydmljZSArIENsZWFubGluZXNzLCBmYW1pbHk9Ymlub21pYWwsIGRhdGE9ZGZfZW5jKQpscnRlc3QobG9nbW9kZWwucmVkdWNlZCwgIGxvZ21vZGVsKQoKCmBgYAoKIyMgVGVzdGluZyBmb3IgQWRlcXVhY3kgKCRSXnsyfSQpClRoZSBzdGFuZGFyZCAqZ29vZG5lc3Mtb2YtZml0KiBzdGF0aXN0aWMgZm9yIE9MUyByZWdyZXNzaW9uICRSXnsyfSQgKGFsc28gY2FsbGVkIHRoZSBjb2VmZmljaWVudCBvZiBkZXRlcm1pbmF0aW9uKS4gVGhlIGhpZ2hlciB0aGlzIHZhbHVlLCB0aGUgYmV0dGVyIHRoZSAqKmZpdCoqIG9mIHRoZSBtb2RlbC4gJFJeezJ9JCBpcyBkZWZpbmVkIGFzOgokJAogIFJeezJ9ID0gXGZyYWN7XHRleHR7VG90YWwgU3VtIG9mIFNxdWFyZXN9IC0gXHRleHR7UmVzaWR1YWwgU3VtIG9mIFNxdWFyZXN9fXtcdGV4dHtUb3RhbCBTdW0gb2YgU3F1YXJlc319CiQkCkhvd2V2ZXIsICRSXnsyfSQgaXMgbm90IGFwcHJvcHJpYXRlIGZvciB1c2Ugd2l0aCB0aGUgbG9naXN0aWMgbW9kZWwsIHNpbmNlIGl0IGRvZXMgbm90IGluZm9ybSBhYm91dCB0aGUgdmFyaWFiaWxpdHkgYWNjb3VudGVkIGZvciBpbiB0aGUgbW9kZWwsIG5vciBkb2VzIGl0IHByb3ZpZGUgaW5mb3JtYXRpb24gdG8gZGVjaWRlIGJldHdlZW4gbW9kZWxzLiBIZW5jZSwgYSBwc2V1ZG8tJFJeezJ9JCB2YXJpYXRpb24gaXMgdXNlZC4gRnJvbSB0aGUgcmVzdWx0aW5nIHZhbHVlLCBpdCBpcyBzZWVuIHRoYXQgdGhlIG1vZGVsIGlzIGJvcmRlcmxpbmUgYWRlcXVhdGUKYGBge3J9CnJlcXVpcmUocm1zKQoKbGwubnVsbCA8LSBsb2dtb2RlbCRudWxsLmRldmlhbmNlLy0yCmxsLnByb3Bvc2VkIDwtIGxvZ21vZGVsJGRldmlhbmNlLy0yCgpyX3NxdWFyZWQgPC0gKGxsLm51bGwgLSBsbC5wcm9wb3NlZCkgLyBsbC5udWxsCgpyX3NxdWFyZWQKYGBgClNhdmluZyBmb3IgRnV0dXJlIFVzZQpgYGB7cn0Kc2F2ZShsb2dtb2RlbCwgZmlsZT0nbW9kZWwuUkRhdGEnKQpgYGAKQWx0aG91Z2ggbm9uLXN0YW5kYXJkIHByYWN0aWNlLCBmb3IgdGhlIHB1cnBvc2Ugb2YgcHJlZGljdGlvbi9hcHBsaWNhdGlvbiwgYSB0cmFpbmluZyB0dXBsZSB3aWxsIGJlIHVzZWQgdG8gZGV0ZXJtaW5lIHRoZSBsaWtlbGluZXNzIG9mICdzdWNjZXNzJyAocGFzc2VuZ2VyIGJlaW5nIHNhdGlzZmllZCkKYGBge3J9Cm1vZGVsID0gbG9hZCggJ21vZGVsLlJEYXRhJykKCm5ld2RhdGEgPSBkZl9lbmNbMSwgXQpwcmVkaWN0KGdldChtb2RlbCksIG5ld2RhdGEpCmBgYApHaXZlbiB0aGUgYWJvdmUgcHJlZGljdGlvbiwgd2UgY2FuIHJlLWNoZWNrIHRoZSBvcmlnaW5hbCBkYXRhZnJhbWUsIGdpdmVuIHRoYXQgdGhlIGFib3ZlIHByZWRpY3Rpb24gd2FzIGxlc3MgdGhhbiB6ZXJvLCB0aGUgbG9naXN0aWMgcmVncmVzc2lvbiBtb2RlbCB3b3VsZCBoYXZlIGNvcnJlY3RseSBjbGFzc2lmaWVkIHRoZSB0dXBsZSBpbnRvIHRoZSAnbm90IHNhdGlzaWZpZWQvbmV1dHJhbCcgY2F0ZWdvcnkgCmBgYHtyfQpkZl9lbmNbMSxuY29sKGRmX2VuYyldCmBgYAoKCgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWlybGluZSBQYXNzZW5nZXIgU2F0aXNmYWN0aW9uIgphdXRob3I6ICJBYWRpZGV2IFNvb2tuYW5hbiAgXG44MTYwMDMwMjJcbiIKZGF0ZTogIkFwcmlsIDE1LCAyMDIxIgpvdXRwdXQ6CiAgcGRmX2RvY3VtZW50OiAKICAgIHRvYzogdHJ1ZQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlCiAgaHRtbF9ub3RlYm9vazoKICAgIGNzczogc3R5bGUuY3NzCiAgICBudW1iZXJfc2VjdGlvbnM6IHllcwogIGh0bWxfZG9jdW1lbnQ6CiAgICBkZl9wcmludDogcGFnZWQKLS0tCgojIE92ZXJ2aWV3CiMjIE9iamVjdGl2ZQpUaGUgYWltIG9mIHRoaXMgcHJvamVjdCBhaW1zIHRvIHByZWRpY3QgYWlybGluZSBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uCgojIyBEYXRhc2V0ClRoZSBkYXRhIGZvciB0aGlzIHByb2plY3Qgd2FzIGdvdHRlbiBmcm9tIEthZ2dsZS5jb20gYW5kIHVwbG9hZGVkIGJ5IHVzZXIgXHRleHRpdHtUSiBLbGVpbn0gWzFdLiBUaGUgcGFyYW1ldGVycyBhcmUgYSBtaXggb2YgY2F0ZWdvcmljYWwgYW5kIG51bWVyaWNhbCBhcyBmb2xsb3dzOiBcdGV4dGJme0NhdGVnb3JpY2FsfTogR2VuZGVyLCBDdXN0b21lciBUeXBlLCBUeXBlIG9mIFRyYXZlbCwgQ2xhc3MsIFx0ZXh0YmZ7TnVtZXJpY2FsfTogRmxpZ2h0IERpc3RhbmNlLCBJbmZsaWdodCBXaWZpLCBEZXBhcnR1cmUgVGltZSBDb252ZW5pZW50LCBFYXNlIG9mIE9ubGluZSBCb29raW5nLCBHYXRlIExvY2F0aW9uLCBGb29kIGFuZCBEcmluaywgT25saW5lIEJvYXJkaW5nLCBTZWF0IENvbWZvcnQsIEluZmxpZ2h0IEVudGVydGFpbm1lbnQsIE9uYm9hcmQgU2VydmljZSwgTGVnIFJvb20gU2VydmljZSwgQmFnZ2FnZSBIYW5kbGluZywgQ2hlY2tpbiBTZXJ2aWNlLCBJbmZsaWdodCBTZXJ2aWNlLCBDbGVhbmxpbmVzcywgRGVwYXJ0dXJlIERlbGF5LCBBcnJpdmFsIERlbGF5LiBUaGUgY2xhc3MgdG8gYmUgcHJlZGljdGVkIGlzIFx0ZXh0aXR7c2F0aXNmYWN0aW9ufTogU2F0aXNmaWVkIG9yIE5ldXRyYWwvTmVnYXRpdmUuIFRoZSBkYXRhLXNldCBhbHNvIGNvbnRhaW5lZCBzb21lIG5vbi1pbmZvcm1hdGl2ZSBhdHRyaWJ1dGVzIHN1Y2ggYXMgXHRleHRpdHtYfSBhbmQgUGFzc2VuZ2VyIElELCB3aGljaCB3ZXJlIGRyb3BwZWQgcHJpb3IgdG8gcGVyZm9ybWluZyBhbnkgYW5hbHlzZXMuCgoKCiMjIFByb2JsZW0gRm9ybXVsYXRpb24KVGhlIHByb2JsZW0gd2lsbCBiZSBmb3JtdWxhdGVkIGFzIGEgR2VuZXJhbGlzZWQgTGluZWFyIE1vZGVsLCBmb2xsb3dlZCBieSBzaWdtb2lkIGFjdGl2YXRpb24gZm9yIHRoZSBwdXJwb3NlIG9mIGNsYXNzaWZpY2F0aW9uCgojIFIgSW1wbGVtZW50YXRpb24KIyMgTG9hZGluZyBhbmQgUHJlcHJvY2Vzc2luZwoKRmlyc3RseSwgdGhlIENTViBmaWxlIGlzIGxvYWRlZCBpbnRvIGEgdmFyaWFibGUgY2FsbGVkIGRmLCBhbmQgdGhlIGZpcnN0IGZldyByb3dzIGFyZSBwcmV2aWV3ZWQgdXNpbmcgdGhlIGhlYWQgZnVuY3Rpb24KCmBgYHtyfQpsaWJyYXJ5KCJrbml0ciIpCgpkZiA8LSByZWFkLmNzdignZGF0YS90cmFpbi5jc3YnKQpkZiA8LSBkZltjb21wbGV0ZS5jYXNlcyhkZiksIF0KaGVhZChkZikKYGBgCkFmdGVyIHZpZXdpbmcgdGhlIGFib3ZlLCB0aGUgcGFyYW1ldGVyIHRvIGJlIHByZWRpY3RlZCBpcyB0aGUgbGV2ZWwgb2YgcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbi4gQWxsIGRpc2NyZXRlIHZhbHVlcyAob3IgbGV2ZWxzKSBhcmUgZm91bmQgYmVsb3cKYGBge3J9CmxhYmVscyA9IHN1YnNldChkZiwgc2VsZWN0PSJzYXRpc2ZhY3Rpb24iKQp1bmlxdWUobGFiZWxzKQpgYGAKClVubmVjZXNzYXJ5IGNvbHVtbnMgYXJlIHJlbW92ZWQsIGZyb20gdGhlIGFib3ZlLCBYIGFuZCBpZCBkbyBub3Qgc2VlbSB0byBjb250cmlidXRlIG1lYW5pbmdmdWwgaW5mb3JtYXRpb24gdG8gdGhlIGRhdGFzZXQsIGFuZCBhcmUgc3Vic2VxdWVudGx5IHBydW5lZCwgd2UgZnVydGhlciBleHBsb3JlIHRoZSBzdHJ1Y3R1cmUgb2YgZGF0YSBpbiBvcmRlciB0byBnZXQgYSBiZXR0ZXIgaWRlYSBvZiBkYXRhdHlwZXMgYW5kIHZhbHVlZXMKCmBgYHtyfQpkZiA8LSBzdWJzZXQoZGYsIHNlbGVjdD0tYyhYLCBpZCkpCnN0cihkZikKYGBgCgpGb2xsb3dpbmcgbnVtZXJpYyBlbmNvZGluZywgUiBleHBlY3RzIHZhcmlhYmxlcyB0byBiZSBvZiB0eXBlIGZhY3RvciBmb3IgTG9naXN0aWMgUmVncmVzc2lvbiB0byBiZSBwZXJmb3JtZWQsIHRoaXMgaXMgZG9uZSBuZXh0LiBGcm9tIHRoZSBvdXRwdXQgdGhhdCBmb2xsb3dzLCB0aGUgZGF0YWZyYW1lIHdhcyBzdWNjZXNzZnVsbHkgY29udmVydGVkIGludG8gbGV2ZWxzIHdpdGggbm8gTkFzIGludHJvZHVjZWQgYnkgY29lcmNpb24gZXJyb3JzIHRocm93aAoKYGBge3J9CmRmX2VuYyA9IGRmCgpkZl9lbmMkR2VuZGVyID0gYXMubnVtZXJpYyhmYWN0b3IoZGZfZW5jJEdlbmRlciwgbGV2ZWxzID0gYygiTWFsZSIsIkZlbWFsZSIpLCBsYWJlbHMgPSBjKDAsIDEpKSkKZGZfZW5jJEN1c3RvbWVyLlR5cGUgPSBhcy5udW1lcmljKGZhY3RvcihkZl9lbmMkQ3VzdG9tZXIuVHlwZSwgbGV2ZWxzID0gYygiTG95YWwgQ3VzdG9tZXIiLCAiZGlzbG95YWwgQ3VzdG9tZXIiKSwgbGFiZWxzID0gYygxLCAwKSkpCmRmX2VuYyRUeXBlLm9mLlRyYXZlbCA9IGFzLm51bWVyaWMoZmFjdG9yKGRmX2VuYyRUeXBlLm9mLlRyYXZlbCwgbGV2ZWxzID0gYygiUGVyc29uYWwgVHJhdmVsIiwgIkJ1c2luZXNzIHRyYXZlbCIpLCBsYWJlbHMgPSBjKDEsIDApKSkKZGZfZW5jJENsYXNzID0gYXMubnVtZXJpYyhmYWN0b3IoZGZfZW5jJENsYXNzLCBsZXZlbHMgPSBjKCJFY28gUGx1cyIsICJCdXNpbmVzcyIsICJFY28iKSwgbGFiZWxzID0gYygwLCAxLCAyKSkpCgoKCmRmX2VuYyRBZ2UgPSBhcy5udW1lcmljKGRmX2VuYyRBZ2UpCmRmX2VuYyRUeXBlLm9mLlRyYXZlbCA9IGFzLm51bWVyaWMoZGZfZW5jJFR5cGUub2YuVHJhdmVsKQpkZl9lbmMkQ2xhc3MgPSBhcy5udW1lcmljKGRmX2VuYyRDbGFzcykKZGZfZW5jJEZsaWdodC5EaXN0YW5jZSA9YXMubnVtZXJpYyhkZl9lbmMkRmxpZ2h0LkRpc3RhbmNlKQpkZl9lbmMkSW5mbGlnaHQud2lmaS5zZXJ2aWNlID0gYXMubnVtZXJpYyhkZl9lbmMkSW5mbGlnaHQud2lmaS5zZXJ2aWNlKQpkZl9lbmMkRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50ID0gYXMubnVtZXJpYyhkZl9lbmMkRGVwYXJ0dXJlLkFycml2YWwudGltZS5jb252ZW5pZW50KQpkZl9lbmMkRWFzZS5vZi5PbmxpbmUuYm9va2luZyA9IGFzLm51bWVyaWMoZGZfZW5jJEVhc2Uub2YuT25saW5lLmJvb2tpbmcpCmRmX2VuYyRHYXRlLmxvY2F0aW9uID0gYXMubnVtZXJpYyhkZl9lbmMkR2F0ZS5sb2NhdGlvbikKZGZfZW5jJEZvb2QuYW5kLmRyaW5rID0gYXMubnVtZXJpYyhkZl9lbmMkRm9vZC5hbmQuZHJpbmspCmRmX2VuYyRPbmxpbmUuYm9hcmRpbmcgPSBhcy5udW1lcmljKGRmX2VuYyRPbmxpbmUuYm9hcmRpbmcpCmRmX2VuYyRJbmZsaWdodC5lbnRlcnRhaW5tZW50ID0gYXMubnVtZXJpYyhkZl9lbmMkSW5mbGlnaHQuZW50ZXJ0YWlubWVudCkKZGZfZW5jJE9uLmJvYXJkLnNlcnZpY2UgPSBhcy5udW1lcmljKGRmX2VuYyRPbi5ib2FyZC5zZXJ2aWNlKQpkZl9lbmMkTGVnLnJvb20uc2VydmljZSA9IGFzLm51bWVyaWMoZGZfZW5jJExlZy5yb29tLnNlcnZpY2UpCmRmX2VuYyRCYWdnYWdlLmhhbmRsaW5nID0gYXMubnVtZXJpYyhkZl9lbmMkQmFnZ2FnZS5oYW5kbGluZykKZGZfZW5jJENoZWNraW4uc2VydmljZSA9IGFzLm51bWVyaWMoZGZfZW5jJENoZWNraW4uc2VydmljZSkKZGZfZW5jJEluZmxpZ2h0LnNlcnZpY2UgPSBhcy5udW1lcmljKGRmX2VuYyRJbmZsaWdodC5zZXJ2aWNlKQpkZl9lbmMkQ2xlYW5saW5lc3MgPSBhcy5udW1lcmljKGRmX2VuYyRDbGVhbmxpbmVzcykKZGZfZW5jJERlcGFydHVyZS5EZWxheS5pbi5NaW51dGVzID0gYXMubnVtZXJpYyhkZl9lbmMkRGVwYXJ0dXJlLkRlbGF5LmluLk1pbnV0ZXMpCmRmX2VuYyRBcnJpdmFsLkRlbGF5LmluLk1pbnV0ZXMgPSBhcy5udW1lcmljKGRmX2VuYyRBcnJpdmFsLkRlbGF5LmluLk1pbnV0ZXMpCgpkZl9lbmMkc2F0aXNmYWN0aW9uIDwtIGlmZWxzZSh0ZXN0PWRmX2VuYyRzYXRpc2ZhY3Rpb24gPT0gJ3NhdGlzZmllZCcsIHllcz0xLCBubz0wKQoKCnN0cihkZl9lbmMpCgpgYGAKIyMgQ29ycmVsYXRpb24gQW5hbHlzaXMKCkNvcnJlbGF0aW9uIGFuYWx5c2lzIGlzIHBlcmZvcm1lZCB0byBkZXRlcm1pbmUgcGFpcndpc2UgY29ycmVsYXRpb25zIHdpdGhpbiB0aGUgZGF0YXNldC4gU2luY2Ugd2UgYXJlIGNvbmNlcm5lZCBtYWlubHkgd2l0aCBsaW5lYXIgcmVsYXRpb25zLCB0aGUgUGVhcnNvbiBjb3JyZWxhdGlvbiBjb2VmZmljaWVudCBpcyB1c2VkIGluIG9yZGVyIHRvIGRldGVybWluZSB0aGUgZXh0ZW50IG9mIGNvcnJlbGF0aW9uIGFtb25nc3QgdGhlIGF0dHJpYnV0ZXMsIHRoaXMgaXMgdmlzdWFsaXNlZCB1c2luZyBhIGNvcnJlbGF0aW9uIGhlYXRtYXAgYmVsb3cKCmBgYHtyfQpsaWJyYXJ5KHJlc2hhcGUyKQpsaWJyYXJ5KGdncGxvdDIpCgpjb3JfbWF0cml4IDwtIGNvcihkZl9lbmMpCmNvcl9tYXRyaXhbbG93ZXIudHJpKGNvcl9tYXRyaXgpXTwtIE5BCmNvcl9tYXRyaXhfbWVsdGVkIDwtIG1lbHQoY29yX21hdHJpeCwgbmEucm0gPSBUUlVFKQoKCmdncGxvdChkYXRhID0gY29yX21hdHJpeF9tZWx0ZWQsIGFlcyhWYXIyLCBWYXIxLCBmaWxsID0gdmFsdWUpKSsKIGdlb21fdGlsZShjb2xvciA9ICJ3aGl0ZSIpKwogc2NhbGVfZmlsbF9ncmFkaWVudDIobG93ID0gImJsdWUiLCBoaWdoID0gInJlZCIsIG1pZCA9ICJ3aGl0ZSIsIAogICBtaWRwb2ludCA9IDAsIGxpbWl0ID0gYygtMSwxKSwgc3BhY2UgPSAiTGFiIiwgCiAgIG5hbWU9IlBlYXJzb25cbkNvcnJlbGF0aW9uIikgKwogIHRoZW1lX21pbmltYWwoKSsgCiB0aGVtZShheGlzLnRleHQueCA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDkwLCB2anVzdCA9IDEsIAogICAgc2l6ZSA9IDEwLCBoanVzdCA9IDEpKSsKIGNvb3JkX2ZpeGVkKCkKYGBgCgojIyBMb2dpc3RpYyBHTE0KCk5vdyB0aGUgbG9naXQtbW9kZWwgc2hhbGwgYmUgYnVpbHQgdXNpbmcgdGhlIEdMTSBzeW50YXgsIHdpdGggc3VtbWFyeSBiZWluZyBjYWxsZWQgdG8gZGlzcGxheSB0LXZhbHVlcywgUC12YWx1ZXMgZXN0aW1hdGVkIGNvZWZmaWNpZW50cyBhbmQgdGhlIGFzc29jaWF0ZWQgZXJyb3JzCgpHb2luZyB0aHJvdWdoIHRoZSBjb2VmZmljZW50cyB0aGF0IGZvbGxvdyx0aGUgb25seSBmYWN0b3JzIHdoaWNoIHdlcmUgbm90IHNpZ25pZmljYW50bHkgY29ycmVsYXRlZCB0byBzYXRpc2ZhY3Rpb24gd2FzIGZsaWdodCBkaXN0YW5jZS4gSXQgc2VlbWVkIHRoYXQgYWxsIG90aGVyIGZhY3RvcnMgZXhoaWJpdGVkIHNvbWUgbGV2ZWwgb2YgbGluZWFyIGNvcnJlbGF0aW9uIHdpdGggdGhlIHJlc3BvbnNlIHZhcmlhYmxlLiBIb3dldmVyLCBhIGhpZ2ggbGV2ZWwgb2Ygc2lnbmlmaWNhbmNlIGRvZXMgbm90IGFsb25lIG1ha2UgYW4gYXR0cmlidXRlIHN0YXRpc3RpY2FsbHkgJ2ludGVyZXN0aW5nJy4gRm9sbG93aW5nIHRoZSBsZXZlbHMgb2YgZXN0aW1hdGVkIGNvcnJlbGF0aW9uLCB0aGUgYXR0cmlidXRlcyB3aXRoIHRoZSBoaWdoZXN0IGNvZWZmaWNpZW50cyBhcmUgYXMgZm9sbG93cyAoaW4gZGVzY2VuZGluZyBtYWduaXR1ZGUgb2YgZXN0aW1hdGVkIGNvZWZmaWNpZW50KToKCiMjIyBFeHBsYW5hdGlvbiBvZiBDb2VmZmljaWVudHMKCkF0dHJpYnV0ZSB8IENvbW1lbnRzCi0tLS0tLS0tLS0tLS0tLS18LS0tLS0tLS0tLS0tLS0KR2VuZGVyIHwgUG9zaXRpdmVseSBjb3JyZWxhdGVkLCB3aGljaCBtYXkgaW1wbHkgdGhhdCBtYWxlIGN1c3RvbWVycyBhcmUgb3ZlcmFsbHkgbW9yZSBzYXRpc2ZpZWQKVHlwZSBvZiBUcmF2ZWwgfCBJdCBzZWVtcyB0aGF0IHBlcnNvbmFsIHRyYXZlbCB3YXMgbW9yZSBwb3NpdGl2ZWx5IGNvcnJlbGF0ZWQgd2l0aCBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uIHRoYW4gYnVzaW5lc3MgdHJhdmVsCkN1c3RvbWVyLlR5cGUgfCBOZWdhdGl2ZSBjb3JyZWxhdGlvbiBpbXBsaWVzIHRoYXQgbG95YWwgY3VzdG9tZXJzIG1heSBiZSBvdmVyYWxseSBsZXNzIHNhdGlzZmllZCB3aXRoIHRoZWlyIGZsaWdodApDbGFzcyB8IFBvc2l0aXZlIGNvcnJlbGF0aW9uIG1heSBpbmRpY2F0ZSB0aGF0IGN1c3RvbWVycyBpbiB1cHBlciBjbGFzc2VzIG1heSBiZSBsZXNzIHNhdGlzZmllZCB3aXRoIHRoZSBhaXJsaW5lJ3Mgc2VydmljZQpJbmZsaWdodC53aWZpLnNlcnZpY2UgfCB0aGUgcG9zaXRpdmUgY29lZmZpY2llbnQgaGVyZSBtYXkgaW5kaWNhdGUgdGhhdCBoYXZpbmcgaW5mbGlnaHQgd2lmaSBtYXkgaGF2ZSBhIHBvaXN0aXZlIGVmZmVjdCBvbiBjdXN0b21lciBzYXRpc2ZjYXRpb24KT25saW5lLmJvYXJkaW5nIHwgVGhlIHBvc2l0aXZlIGNvZWZmaWNpZW50IGluZGljYXRlcyB0aGF0IGhhdmluZyB0aGUgb3B0aW9uIGZvciBvbmxpbmUgYm9hcmRpbmcgIHByZS1mbGlnaHQgbWF5IGluY3JlYXNlIHBhc3NlbmdlciBzYXRpc2ZhY3Rpb24KQ2hlY2tpbi5zZXJ2aWNlIHwgU2ltaWxhciB0byB0aGUgYWJvdmUsIHRoZSBxdWFsaXR5IG9mIGNoZWNraW4tc2VydmljZSBtYXkgcG9zaXR2ZWx5IGNvcnJlbGF0ZSB0byBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uCkxlZy5yb29tLnNlcnZpY2UgfCB0aGUgYW1vdW50IG9mIGxlZy1yb29tIGF2YWlsYWJsZSBhbHNvIHdhcyBwb3NpdGl2ZWx5IGNvcnJlbGF0ZWQgdG8gcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbiwgdGhpcyBtYXkgdHJhbnNsYXRlIHRvIHBhc3NlbmdlcnMgYmVpbmcgb3ZlcmFsbHkgbW9yZSBzYXRpc2ZpZWQgd2l0aCBtb3JlIGxlZ3Jvb20KQ2xlYW5saW5lc3MgfCB0aGUgbGV2ZWwgb2YgKHN1YmplY3RpdmUpIGNsZWFubGluZXNzIHdhcyBmb3VuZCB0byBhbHNvIHBvc2l0aXZlbHkgaW1wYWN0IGEgcGFzc2VuZ2VyJ3Mgc2F0aXNmYWN0aW9uIHdpdGggdGhlaXIgZmxpZ2h0IGV4cGVyaWVuY2UKT24uYm9hcmQuc2VydmljZSB8IHNpbWlsYXIgdG8gbGVnLXJvb20gc2VydmljZSwgdGhlIHF1YWxpdHkgb2Ygc2VydmljZSAocHJlc3VtYWJseSBmcm9tIGZsaWdodC1hdHRlbmRhbmNlIGR1cmluZyB0aGUgZmxpZ2h0KSB3YXMgZm91bmQgdG8gcG9zaXRpdmVseSBpbmZsdWVuY2UgcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbgpFYXNlLm9mLk9ubGluZS5ib29raW5nIHwgdGhpcyB3YXMgZm91bmQgdG8gbmVnYXRpdmVseSBjb3JyZWxhdGUgd2l0aCBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uCkJhZ2dhZ2UuaGFuZGxpbmcgfCB0aGUgcXVhbGl0eSBvZiBiYWdnYWdlIGhhbmRsaW5nIHdhcyBhbHNvIGZvdW5kIHRvIHBvc2l0aXZlbHkgaW1wYWN0IHBhc3NlbmdlciBzYXRpc2ZhY3Rpb24gbGV2ZWxzCkRlcGFydHVyZS5BcnJpdmFsLnRpbWUuY29udmVuaWVudCB8IHN0cmFuZ2VseSwgdGhlIGNvbnZlbmllbmNlIG9mIGFycml2YWwgdGltZSB3YXMgZm91bmQgdG8gbmVnYXRpdmVseSBjb3JyZWxhdGUgd2l0aCBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uLCB0aGlzIG1heSBwcm9vdmUgYW4gaW50ZXJlc3RpbmcgYXJlYSBvZiByZXNlYXJjaApJbmZsaWdodC5zZXJ2aWNlIHwgRmluYWxseSwgdGhlIHF1YWxpdHkgb2YgaW5mbGlnaHQgc2VydmljZSAobWVkaWEsIGV0Yykgd2FzIGZvdW5kIHRvIHBvc2l0aXZlbHkgaW1wYWN0IGEgcGFzc2VuZ2VyJ3MgbGV2ZWwgb2Ygc2F0aXNmYWN0aW9uIG9uIGEgZmxpZ2h0CiAKIAoKYGBge3J9CmxvZ21vZGVsIDwtIGdsbSgKICBzYXRpc2ZhY3Rpb24gfiAuLCBmYW1pbHkgPSBiaW5vbWlhbCwgZGF0YSA9ICBkZl9lbmMKKQpzdW1tYXJ5KGxvZ21vZGVsKQpgYGAKCiMjIyBDb25maWRlbmNlIEludGVydmFscwpUaGUgY29uZmlkZW5jZSBpbnRlcnZhbHMgZm9yIHRoZSBwYXJhbWV0ZXJzIGF0IGxldmVsIDAuOTUgYXJlIGZvdW5kIHVzaW5nIHRoZSBjb25maW50LWZ1bmN0aW9uIGFzIHNob3duIGJlbG93CmBgYHtyfQpjb25maW50KGxvZ21vZGVsLCBsZXZlbCA9IDAuOTUpCmBgYAojIyMgQ29uZmlkZW5jZSBJbnRlcnZhbHMgZm9yIE9kZHMgUmF0aW8KYGBge3J9CmV4cChjb25maW50KGxvZ21vZGVsLCBsZXZlbCA9IDAuOTUpKQpgYGAKIyMgTFJUIFRlc3QKClNpbmNlIHRoZSBMUlQgdGVzdCBhcHByb3hpbWF0ZWx5IG1hdGNoZXMgdGhlIFdhbGQgdGVzdCB3aGVuIHRoZSBzYW1wbGUgc2l6ZSBpcyByZWxhdGl2ZWx5IGxhcmdlLCB0aGUgV2FsZCB0ZXN0IGZvciBpbmRpdmlkdWFsIHBhcmFtZXRlcnMgaXMgbm90IGNhcnJpZWQgb3V0LiBBcyBhcyBhc2lkZSwgdGhlIG1haW4gYmVuZWZpdCBvZiB1c2luZyB0aGUgV2FsZCB0ZXN0IGlzIG5vdCBoYXZpbmcgdG8gYnVpbGQgYSBzZXBhcmF0ZSBudWxsIG1vZGVsIGFzIGluIHRoZSBMUlQsIGhlbmNlIHRoaXMgY29udmVuaWVuY2UgaXMgbnVsbGlmaWVkIGdpdmVuIHRoYXQgTFJUIGlzIGNhcnJpZWQgb3V0IG5vbmV0aGVsZXNzLgoKIyMjIExSVCB3aXRoIE51bGwgTW9kZWwKClRoZSBsaWtlbGlob29kIHJhdGlvIHRlc3RzICRIX3swfSQ6IHJlZHVjZWQgbW9kZWwgdnMgJEhfezF9JDogZnVsbCBtb2RlbC4gU2luY2UgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiBsb2ctbGlrZWxpaG9vZCBzdGF0aXN0aWNzIGZvciB0d28gbW9kZWxzIChvbmUgb2Ygd2hpY2ggaXMgYSBzcGVjaWFsIGNhc2Ugb2YgdGhlIG90aGVyKSBmb2xsb3dzIGFuIGFwcHJveGltYXRlICRjaGleezJ9JCBkaXN0cmlidXRpb24sIHdlIGNhbiBmaW5kIHRoZSAkY2hpXnsyfSQgdGVzdCBzdGF0aXN0aWMgZm9yIGEgZnVsbCB2cyByZWR1Y2VkIChzb21lIHBhcmFtdGVycyBzZXQgdG8gemVybykuIFRoZSBkZWdyZWVzLW9mLWZyZWVkb20gYXJlIHRoZSBudW1iZXIgb2YgcGFyYW1ldGVycyBzZXQgdG8gemVybyBpbiB0aGUgcmVkdWNlZCBtb2RlbC4gVGhlIG51bGwgaHlwb3RoZXNlcyBiZWluZyB0ZXN0ZWQsIGluIGVzc2VuY2UsIGFyZSB0aGF0IHRoZSBzdWJzZXQgb2YgcGFyYW1ldGVycyBzZXQgdG8gemVybyBhcmUgYWN0dWFsbHkgbm9uLXNpZ25pZmljYW50IGZvciB0aGUgcHVycG9zZXMgb2YgZXN0aW1hdGluZyB0aGUgbGV2ZWwgb2YgcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbi4KCkZyb20gdGhlIHJlc3VsdHMgb2YgdGhlIExSVCwgaXQgaXMgc2hvd24gdGhhdCBsZXZlbCBvZiBzYXRpc2ZhY3Rpb24gaXMgc3RhdGlzdGljYWxseSAoc2lnbmlmaWNhbnRseSkgY29ycmVsYXRlZCB0byB0aGUgYXR0cmlidXRlcyBwcmVzZW50IGluIHRoZSBmdWxsIG1vZGVsLCBoZW5jZSB0aGUgbnVsbCBoeXBvdGhlc2lzIChhbGwgYXR0cmlidXRlcyBjb2VmZmljaWVudHMgYXJlIHplcm8pIHdhcyBkaXNwcm92ZW4KCmBgYHtyfQpsaWJyYXJ5KGxtdGVzdCkKCm51bGxtb2RlbCA8LSAgZ2xtKGZvcm11bGEgPSBzYXRpc2ZhY3Rpb24gfiAxLCBmYW1pbHkgPSBiaW5vbWlhbCwgZGF0YSA9IGRmX2VuYykKCmxydGVzdChudWxsbW9kZWwsIGxvZ21vZGVsKQpgYGAKIyMjIExSVCBUZXN0IHdpdGggUmVkdWNlZCBNb2RlbApGcm9tIHRoZSBmb2xsb3dpbmcgTFJUIHVzaW5nIG9ubHkgdGhlIG1vc3Qgc2lnbmlmaWNhbnQgcGFyYW1ldGVycyBhYm92ZS4gRnJvbSB0aGUgcmVzdWx0cyBiZWxvdywgd2UgY2FuIHNlZSB0aGF0IHRoZSB0aGUgcC12YWx1ZSBpcyBuZWFyIHplcm8gd2l0aCB0aGUgJFxjaGleezJ9JCBzdGF0aXN0aWMgc2hvd3MgdGhhdCB0aGUgJFxiZXRhIHMkIGZvciB0aGUgYXR0cmlidXRlcyBvbWl0dGVkIGFyZSBzdGF0aXN0aWNhbGx5IGhpZ2hseSBsaWtlbHkgdG8gYmUgbm9uLXplcm8KYGBge3J9CmxpYnJhcnkobG10ZXN0KQoKbG9nbW9kZWwucmVkdWNlZCA8LSBnbG0oc2F0aXNmYWN0aW9uIH4gR2VuZGVyICsgVHlwZS5vZi5UcmF2ZWwgKyBDdXN0b21lci5UeXBlICsgQ2xhc3MgKyBJbmZsaWdodC53aWZpLnNlcnZpY2UgKyBEZXBhcnR1cmUuQXJyaXZhbC50aW1lLmNvbnZlbmllbnQgKyBFYXNlLm9mLk9ubGluZS5ib29raW5nICsgT25saW5lLmJvYXJkaW5nICsgT24uYm9hcmQuc2VydmljZSArIExlZy5yb29tLnNlcnZpY2UgKyBCYWdnYWdlLmhhbmRsaW5nICsgQ2hlY2tpbi5zZXJ2aWNlICsgSW5mbGlnaHQuc2VydmljZSArIENsZWFubGluZXNzLCBmYW1pbHk9Ymlub21pYWwsIGRhdGE9ZGZfZW5jKQpscnRlc3QobG9nbW9kZWwucmVkdWNlZCwgIGxvZ21vZGVsKQoKCmBgYAoKIyMgVGVzdGluZyBmb3IgQWRlcXVhY3kgKCRSXnsyfSQpClRoZSBzdGFuZGFyZCAqZ29vZG5lc3Mtb2YtZml0KiBzdGF0aXN0aWMgZm9yIE9MUyByZWdyZXNzaW9uICRSXnsyfSQgKGFsc28gY2FsbGVkIHRoZSBjb2VmZmljaWVudCBvZiBkZXRlcm1pbmF0aW9uKS4gVGhlIGhpZ2hlciB0aGlzIHZhbHVlLCB0aGUgYmV0dGVyIHRoZSAqKmZpdCoqIG9mIHRoZSBtb2RlbC4gJFJeezJ9JCBpcyBkZWZpbmVkIGFzOgokJAogIFJeezJ9ID0gXGZyYWN7XHRleHR7VG90YWwgU3VtIG9mIFNxdWFyZXN9IC0gXHRleHR7UmVzaWR1YWwgU3VtIG9mIFNxdWFyZXN9fXtcdGV4dHtUb3RhbCBTdW0gb2YgU3F1YXJlc319CiQkCkhvd2V2ZXIsICRSXnsyfSQgaXMgbm90IGFwcHJvcHJpYXRlIGZvciB1c2Ugd2l0aCB0aGUgbG9naXN0aWMgbW9kZWwgWzFdLCBzaW5jZSBpdCBkb2VzIG5vdCBpbmZvcm0gYWJvdXQgdGhlIHZhcmlhYmlsaXR5IGFjY291bnRlZCBmb3IgaW4gdGhlIG1vZGVsLCBub3IgZG9lcyBpdCBwcm92aWRlIGluZm9ybWF0aW9uIHRvIGRlY2lkZSBiZXR3ZWVuIG1vZGVscy4gSGVuY2UsIGEgcHNldWRvLSRSXnsyfSQgdmFyaWF0aW9uIGlzIHVzZWQuIEZyb20gdGhlIHJlc3VsdGluZyB2YWx1ZSwgaXQgaXMgc2VlbiB0aGF0IHRoZSBtb2RlbCBpcyBib3JkZXJsaW5lIGFkZXF1YXRlCmBgYHtyfQpyZXF1aXJlKHJtcykKCmxsLm51bGwgPC0gbG9nbW9kZWwkbnVsbC5kZXZpYW5jZS8tMgpsbC5wcm9wb3NlZCA8LSBsb2dtb2RlbCRkZXZpYW5jZS8tMgoKcl9zcXVhcmVkIDwtIChsbC5udWxsIC0gbGwucHJvcG9zZWQpIC8gbGwubnVsbAoKcHJpbnQocl9zcXVhcmVkKQpgYGAKQ29tcGFyaW5nIGZpdCB0byB0aGUgcmVkdWNlZCBtb2RlbCBhYm92ZSwgdGhlICRSXnsyfSQgdmFsdWUgd2FzIGxvd2VyIHRoYW4gdGhhdCBvZiB0aGUgYWJvdmUsCmBgYHtyfQpyZXF1aXJlKHJtcykKCmxsLm51bGwgPC0gbG9nbW9kZWwkbnVsbC5kZXZpYW5jZS8tMgpsbC5wcm9wb3NlZCA8LSBsb2dtb2RlbC5yZWR1Y2VkJGRldmlhbmNlLy0yCgpyX3NxdWFyZWQgPC0gKGxsLm51bGwgLSBsbC5wcm9wb3NlZCkgLyBsbC5udWxsCgpwcmludChyX3NxdWFyZWQpCmBgYAoKU2F2aW5nIGZvciBGdXR1cmUgVXNlCmBgYHtyfQpzYXZlKGxvZ21vZGVsLCBmaWxlPSdtb2RlbC5SRGF0YScpCmBgYAojIyBBcHBsaWNhdGlvbi9FdmFsdWF0aW9uCkFsdGhvdWdoIG5vbi1zdGFuZGFyZCBwcmFjdGljZSwgZm9yIHRoZSBwdXJwb3NlIG9mIHByZWRpY3Rpb24vYXBwbGljYXRpb24sIGEgdHJhaW5pbmcgdHVwbGUgd2lsbCBiZSB1c2VkIHRvIGRldGVybWluZSB0aGUgbGlrZWxpbmVzcyBvZiAnc3VjY2VzcycgKHBhc3NlbmdlciBiZWluZyBzYXRpc2ZpZWQpCgpgYGB7cn0KbW9kZWwgPSBsb2FkKCAnbW9kZWwuUkRhdGEnKQoKbmV3ZGF0YSA9IGRmX2VuY1sxLCBdCnByZWRpY3QoZ2V0KG1vZGVsKSwgbmV3ZGF0YSkKYGBgCkdpdmVuIHRoZSBhYm92ZSBwcmVkaWN0aW9uLCB3ZSBjYW4gcmUtY2hlY2sgdGhlIG9yaWdpbmFsIGRhdGFmcmFtZSwgZ2l2ZW4gdGhhdCB0aGUgYWJvdmUgcHJlZGljdGlvbiB3YXMgbGVzcyB0aGFuIHplcm8sIHRoZSBsb2dpc3RpYyByZWdyZXNzaW9uIG1vZGVsIHdvdWxkIGhhdmUgY29ycmVjdGx5IGNsYXNzaWZpZWQgdGhlIHR1cGxlIGludG8gdGhlICdub3Qgc2F0aXNpZmllZC9uZXV0cmFsJyBjYXRlZ29yeSAKYGBge3J9CmRmX2VuY1sxLG5jb2woZGZfZW5jKV0KYGBgCkluIG9yZGVyIHRvIGV2YWx1YXRlIHRoZSBtb2RlbCBmdXJ0aGVyLCB0aGUgYWNjdXJhY3kgd2FzIGZvdW5kIHRvIGJlOgokJAogIEFjY3VyYWN5ID0gXGZyYWN7NTMxMDIgKyAzNzM4Mn17NTMxMDIgKyAzNzM4MiArIDU1OTUgKyA3NTE1fSA9IFxmcmFjezkwNDg0fXsxMDM1OTR9ID0gMC44NzM0NDgzCiQkCgpgYGB7cn0KcHJlZC5wcm9iID0gcHJlZGljdChsb2dtb2RlbCxkZl9lbmMsIHR5cGU9InJlc3BvbnNlIikKcHJlZC5wcm9iID0gaWZlbHNlKHByZWQucHJvYiA+IDAuNSwgMSwgMCkKdGFibGUocHJlZC5wcm9iLCBkZl9lbmMkc2F0aXNmYWN0aW9uKQpgYGAKIyBDb25jbHVzaW9uCkl0IHdhcyBmb3VuZCB0aGF0IHJlZHVjaW5nIHRoZSBvcmlnaW5hbCAoZnVsbCkgbW9kZWwgZGlkIG5vdCBpbXByb3ZlIGZpdCAoYWNjb3JkaW5nIHRvICRSXnsyfSQgc3RhdGlzdGljIGZvciBMb2dpc3RpYyBSZWdyZXNzaW9uIG1vZGVscykuIEFuIGludGVyZXN0aW5nIGNvcnJlbGF0aW9uIHdhcyBmb3VuZCB0aGF0IHRoZSBjb252ZW5pZW5jZSBvZiBmbGlnaHQgZGVwYXJ0dXJlIHRpbWUgd2FzIGZvdW5kIHRvIG5lZ2F0aXZlbHkgY29ycmVsYXRlIHdpdGggcGFzc2VuZ2VyIHNhdGlzZmFjdGlvbi4gVGhpcyBob3dldmVyLCBpbiByZXRyb3NwZWN0LCBtYXkgYmUgbGVzcyBzdXJwcmlzaW5nIHRoYW4gaXQgb3JpZ2luYWxseSBzZWVtcyBvd2luZyB0byB0aGUgcHJlc2VuY2Ugb2YgYWxsIG90aGVyIHByZWRpY3RvciB2YXJpYWJsZXMuIEFub3RoZXIgdW5mb3Jlc2VlbiByZXN1bHQgd2FzIHRoZSByZWxhdGl2ZSBsYWNrIG9mIGltcG9ydGFuY2UgcmVnYXJkaW5nIGZsaWdodCBkaXN0YW5jZSB0byBwYXNzZW5nZXIgc2F0aXNmYWN0aW9uLCBpbiB0ZXJtcyBvZiBib3RoIHN0YXRpc3RpY2FsIHNpZ25pZmljYW5jZSAoaGlnaGVzdCBwLXZhbHVlKSBhbmQgZXN0aW1hdGVkIGNvZWZmaWNpZW50IChsb3dlc3QpCgoKIyBSZWZlcmVuY2VzClsxXSBIaWxiZSwgSi4gKDIwMTcpLiBBbmFseXNpcyBvZiBNb2RlbCBGaXQuIEluIExvZ2lzdGljIHJlZ3Jlc3Npb24gbW9kZWxzLiBCb2NhIFJhdG9uOiBSb3V0bGVkZ2UsIFRheWxvciAmYW1wOyBGcmFuY2lzIEdyb3VwICAKWzJdIGh0dHBzOi8vd3d3LmthZ2dsZS5jb20vdGVlam1haGFsMjAvYWlybGluZS1wYXNzZW5nZXItc2F0aXNmYWN0aW9uCgoKCgo=</div>
 
 
 

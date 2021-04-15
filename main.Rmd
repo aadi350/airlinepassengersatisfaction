@@ -1,9 +1,31 @@
 ---
 title: "Airline Passenger Satisfaction"
+author: "Aadidev Sooknanan  \n816003022\n"
+date: "April 15, 2021"
 output:
-  pdf_document: default
-  html_notebook: default
+  pdf_document: 
+    toc: true
+    number_sections: true
+  html_notebook:
+    css: style.css
+    number_sections: yes
+  html_document:
+    df_print: paged
 ---
+
+# Overview
+## Objective
+The aim of this project aims to predict airline passenger satisfaction
+
+## Dataset
+The data for this project was gotten from Kaggle.com and uploaded by user \textit{TJ Klein} [1]. The parameters are a mix of categorical and numerical as follows: \textbf{Categorical}: Gender, Customer Type, Type of Travel, Class, \textbf{Numerical}: Flight Distance, Inflight Wifi, Departure Time Convenient, Ease of Online Booking, Gate Location, Food and Drink, Online Boarding, Seat Comfort, Inflight Entertainment, Onboard Service, Leg Room Service, Baggage Handling, Checkin Service, Inflight Service, Cleanliness, Departure Delay, Arrival Delay. The class to be predicted is \textit{satisfaction}: Satisfied or Neutral/Negative. The data-set also contained some non-informative attributes such as \textit{X} and Passenger ID, which were dropped prior to performing any analyses.
+
+
+
+## Problem Formulation
+The problem will be formulated as a Generalised Linear Model, followed by sigmoid activation for the purpose of classification
+
+# R Implementation
 ## Loading and Preprocessing
 
 Firstly, the CSV file is loaded into a variable called df, and the first few rows are previewed using the head function
@@ -89,6 +111,7 @@ ggplot(data = cor_matrix_melted, aes(Var2, Var1, fill = value))+
     size = 10, hjust = 1))+
  coord_fixed()
 ```
+
 ## Logistic GLM
 
 Now the logit-model shall be built using the GLM syntax, with summary being called to display t-values, P-values estimated coefficients and the associated errors
@@ -150,11 +173,11 @@ nullmodel <-  glm(formula = satisfaction ~ 1, family = binomial, data = df_enc)
 lrtest(nullmodel, logmodel)
 ```
 ### LRT Test with Reduced Model
-From the following LRT using only the most significant parameters above. From the results below, we can see that the the level of significance is near zero (however the $\chi^{2}$ statistic shows that the difference in less extreme) Hence the $\beta s$ for the attributes omitted are shown to be non-zero
+From the following LRT using only the most significant parameters above. From the results below, we can see that the the p-value is near zero with the $\chi^{2}$ statistic shows that the $\beta s$ for the attributes omitted are statistically highly likely to be non-zero
 ```{r}
 library(lmtest)
 
-logmodel.reduced <- glm(satisfaction ~ Type.of.Travel + Customer.Type + Class + Inflight.wifi.service + Departure.Arrival.time.convenient + Ease.of.Online.booking + Online.boarding + On.board.service + Leg.room.service + Baggage.handling + Checkin.service + Inflight.service + Cleanliness, family=binomial, data=df_enc)
+logmodel.reduced <- glm(satisfaction ~ Gender + Type.of.Travel + Customer.Type + Class + Inflight.wifi.service + Departure.Arrival.time.convenient + Ease.of.Online.booking + Online.boarding + On.board.service + Leg.room.service + Baggage.handling + Checkin.service + Inflight.service + Cleanliness, family=binomial, data=df_enc)
 lrtest(logmodel.reduced,  logmodel)
 
 
@@ -165,7 +188,7 @@ The standard *goodness-of-fit* statistic for OLS regression $R^{2}$ (also called
 $$
   R^{2} = \frac{\text{Total Sum of Squares} - \text{Residual Sum of Squares}}{\text{Total Sum of Squares}}
 $$
-However, $R^{2}$ is not appropriate for use with the logistic model, since it does not inform about the variability accounted for in the model, nor does it provide information to decide between models. Hence, a pseudo-$R^{2}$ variation is used. From the resulting value, it is seen that the model is borderline adequate
+However, $R^{2}$ is not appropriate for use with the logistic model [1], since it does not inform about the variability accounted for in the model, nor does it provide information to decide between models. Hence, a pseudo-$R^{2}$ variation is used. From the resulting value, it is seen that the model is borderline adequate
 ```{r}
 require(rms)
 
@@ -174,13 +197,27 @@ ll.proposed <- logmodel$deviance/-2
 
 r_squared <- (ll.null - ll.proposed) / ll.null
 
-r_squared
+print(r_squared)
 ```
+Comparing fit to the reduced model above, the $R^{2}$ value was lower than that of the above,
+```{r}
+require(rms)
+
+ll.null <- logmodel$null.deviance/-2
+ll.proposed <- logmodel.reduced$deviance/-2
+
+r_squared <- (ll.null - ll.proposed) / ll.null
+
+print(r_squared)
+```
+
 Saving for Future Use
 ```{r}
 save(logmodel, file='model.RData')
 ```
+## Application/Evaluation
 Although non-standard practice, for the purpose of prediction/application, a training tuple will be used to determine the likeliness of 'success' (passenger being satisfied)
+
 ```{r}
 model = load( 'model.RData')
 
@@ -191,6 +228,23 @@ Given the above prediction, we can re-check the original dataframe, given that t
 ```{r}
 df_enc[1,ncol(df_enc)]
 ```
+In order to evaluate the model further, the accuracy was found to be:
+$$
+  Accuracy = \frac{53102 + 37382}{53102 + 37382 + 5595 + 7515} = \frac{90484}{103594} = 0.8734483
+$$
+
+```{r}
+pred.prob = predict(logmodel,df_enc, type="response")
+pred.prob = ifelse(pred.prob > 0.5, 1, 0)
+table(pred.prob, df_enc$satisfaction)
+```
+# Conclusion
+It was found that reducing the original (full) model did not improve fit (according to $R^{2}$ statistic for Logistic Regression models). An interesting correlation was found that the convenience of flight departure time was found to negatively correlate with passenger satisfaction. This however, in retrospect, may be less surprising than it originally seems owing to the presence of all other predictor variables. Another unforeseen result was the relative lack of importance regarding flight distance to passenger satisfaction, in terms of both statistical significance (highest p-value) and estimated coefficient (lowest)
+
+
+# References
+[1] Hilbe, J. (2017). Analysis of Model Fit. In Logistic regression models. Boca Raton: Routledge, Taylor &amp; Francis Group  
+[2] https://www.kaggle.com/teejmahal20/airline-passenger-satisfaction
 
 
 
