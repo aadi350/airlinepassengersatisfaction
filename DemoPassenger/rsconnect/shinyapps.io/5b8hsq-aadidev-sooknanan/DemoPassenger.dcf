@@ -1,0 +1,14 @@
+name: DemoPassenger
+title: DemoPassenger
+username:
+account: 5b8hsq-aadidev-sooknanan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3976766
+bundleId: 4479116
+url: https://5b8hsq-aadidev-sooknanan.shinyapps.io/DemoPassenger/
+when: 1618561163.6471
+lastSyncTime: 1618561163.64713
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: model.RData

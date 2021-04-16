@@ -1,7 +1,7 @@
 ---
 title: "Airline Passenger Satisfaction"
 author: "Aadidev Sooknanan  \n816003022\n"
-date: "April 15, 2021"
+date: "April 16, 2021"
 output:
   pdf_document: 
     toc: true
@@ -12,13 +12,16 @@ output:
   html_document:
     df_print: paged
 ---
-
+```{r, echo = F}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=80),tidy=TRUE)
+```
 # Overview
 ## Objective
-The aim of this project aims to predict airline passenger satisfaction
+The aim of this project aims to predict airline passenger satisfaction based on various factors influencing the overall airline experience.
 
 ## Dataset
-The data for this project was gotten from Kaggle.com and uploaded by user \textit{TJ Klein} [1]. The parameters are a mix of categorical and numerical as follows: \textbf{Categorical}: Gender, Customer Type, Type of Travel, Class, \textbf{Numerical}: Flight Distance, Inflight Wifi, Departure Time Convenient, Ease of Online Booking, Gate Location, Food and Drink, Online Boarding, Seat Comfort, Inflight Entertainment, Onboard Service, Leg Room Service, Baggage Handling, Checkin Service, Inflight Service, Cleanliness, Departure Delay, Arrival Delay. The class to be predicted is \textit{satisfaction}: Satisfied or Neutral/Negative. The data-set also contained some non-informative attributes such as \textit{X} and Passenger ID, which were dropped prior to performing any analyses.
+The data for this project was gotten from Kaggle.com and uploaded by user \textit{TJ Klein} [2]. The parameters are a mix of categorical and numerical as follows: \textbf{Categorical}: Gender, Customer Type, Type of Travel, Class, \textbf{Numerical}: Flight Distance, Inflight Wifi, Departure Time Convenient, Ease of Online Booking, Gate Location, Food and Drink, Online Boarding, Seat Comfort, Inflight Entertainment, Onboard Service, Leg Room Service, Baggage Handling, Checkin Service, Inflight Service, Cleanliness, Departure Delay, Arrival Delay. The class to be predicted is \textit{satisfaction}: Satisfied or Neutral/Negative. The data-set also contained some non-informative attributes such as \textit{X} and Passenger ID, which were dropped prior to performing any analyses.
 
 
 
@@ -31,8 +34,6 @@ The problem will be formulated as a Generalised Linear Model, followed by sigmoi
 Firstly, the CSV file is loaded into a variable called df, and the first few rows are previewed using the head function
 
 ```{r}
-library("knitr")
-
 df <- read.csv('data/train.csv')
 df <- df[complete.cases(df), ]
 head(df)
@@ -49,6 +50,7 @@ Unnecessary columns are removed, from the above, X and id do not seem to contrib
 df <- subset(df, select=-c(X, id))
 str(df)
 ```
+
 
 Following numeric encoding, R expects variables to be of type factor for Logistic Regression to be performed, this is done next. From the output that follows, the dataframe was successfully converted into levels with no NAs introduced by coercion errors throwh
 
@@ -88,6 +90,11 @@ df_enc$satisfaction <- ifelse(test=df_enc$satisfaction == 'satisfied', yes=1, no
 str(df_enc)
 
 ```
+```{r}
+summary(df_enc)
+```
+
+
 ## Correlation Analysis
 
 Correlation analysis is performed to determine pairwise correlations within the dataset. Since we are concerned mainly with linear relations, the Pearson correlation coefficient is used in order to determine the extent of correlation amongst the attributes, this is visualised using a correlation heatmap below
@@ -114,7 +121,7 @@ ggplot(data = cor_matrix_melted, aes(Var2, Var1, fill = value))+
 
 ## Logistic GLM
 
-Now the logit-model shall be built using the GLM syntax, with summary being called to display t-values, P-values estimated coefficients and the associated errors
+Now the logit-model shall be built using the GLM syntax, with summary being called to display t-values, P-values estimated coefficients and the associated errors. Since this is essentially a binary-classification problem, the binomial distribution is used to predict the outcome.
 
 Going through the coefficents that follow,the only factors which were not significantly correlated to satisfaction was flight distance. It seemed that all other factors exhibited some level of linear correlation with the response variable. However, a high level of significance does not alone make an attribute statistically 'interesting'. Following the levels of estimated correlation, the attributes with the highest coefficients are as follows (in descending magnitude of estimated coefficient):
 
@@ -145,23 +152,25 @@ logmodel <- glm(
 )
 summary(logmodel)
 ```
+### Odds Ratios
+In exploring the odds ratios below,
+```{r}
+exp(cbind(OR = coef(logmodel), confint(logmodel)))
+```
 
 ### Confidence Intervals
 The confidence intervals for the parameters at level 0.95 are found using the confint-function as shown below
 ```{r}
 confint(logmodel, level = 0.95)
 ```
-### Confidence Intervals for Odds Ratio
-```{r}
-exp(confint(logmodel, level = 0.95))
-```
+
 ## LRT Test
 
 Since the LRT test approximately matches the Wald test when the sample size is relatively large, the Wald test for individual parameters is not carried out. As as aside, the main benefit of using the Wald test is not having to build a separate null model as in the LRT, hence this convenience is nullified given that LRT is carried out nonetheless.
 
 ### LRT with Null Model
 
-The likelihood ratio tests $H_{0}$: reduced model vs $H_{1}$: full model. Since the difference between log-likelihood statistics for two models (one of which is a special case of the other) follows an approximate $chi^{2}$ distribution, we can find the $chi^{2}$ test statistic for a full vs reduced (some paramters set to zero). The degrees-of-freedom are the number of parameters set to zero in the reduced model. The null hypotheses being tested, in essence, are that the subset of parameters set to zero are actually non-significant for the purposes of estimating the level of passenger satisfaction.
+The likelihood ratio tests $H_{0}$: reduced model vs $H_{1}$: full model. Since the difference between log-likelihood statistics for two models (one of which is a special case of the other) follows an approximate $\chi^{2}$ distribution, we can find the $\chi^{2}$ test statistic for a full vs reduced (some paramters set to zero). The degrees-of-freedom are the number of parameters set to zero in the reduced model. The null hypotheses being tested, in essence, are that the subset of parameters set to zero are actually non-significant for the purposes of estimating the level of passenger satisfaction.
 
 From the results of the LRT, it is shown that level of satisfaction is statistically (significantly) correlated to the attributes present in the full model, hence the null hypothesis (all attributes coefficients are zero) was disproven
 
@@ -189,6 +198,8 @@ $$
   R^{2} = \frac{\text{Total Sum of Squares} - \text{Residual Sum of Squares}}{\text{Total Sum of Squares}}
 $$
 However, $R^{2}$ is not appropriate for use with the logistic model [1], since it does not inform about the variability accounted for in the model, nor does it provide information to decide between models. Hence, a pseudo-$R^{2}$ variation is used. From the resulting value, it is seen that the model is borderline adequate
+
+
 ```{r}
 require(rms)
 
@@ -215,6 +226,9 @@ Saving for Future Use
 ```{r}
 save(logmodel, file='model.RData')
 ```
+
+
+
 ## Application/Evaluation
 Although non-standard practice, for the purpose of prediction/application, a training tuple will be used to determine the likeliness of 'success' (passenger being satisfied)
 
@@ -238,13 +252,29 @@ pred.prob = predict(logmodel,df_enc, type="response")
 pred.prob = ifelse(pred.prob > 0.5, 1, 0)
 table(pred.prob, df_enc$satisfaction)
 ```
+## ROC Curve
+The ROC curve gives the ratio between True-Positive Rate and False-positive rate. The area under the curve is equivalent to the probability that a randomly chosen positive instance is ranked higher than a randomly chosen negative instance and is equivalent to the Wilcoxon Rank-Sum test statistic. For example, when the AUC is 0.8686484, there is roughly an 87% chance that the model will correctly discriminate between a positive and negative sample
+```{r}
+library(ROCR)
+pred <- prediction(pred.prob, df$satisfaction)
+perf <- performance(pred,"tpr","fpr")
+plot(perf,colorize=TRUE)
+```
+
+```{r}
+perf <- performance(pred,"auc")
+perf@y.values[[1]]
+```
+
 # Conclusion
 It was found that reducing the original (full) model did not improve fit (according to $R^{2}$ statistic for Logistic Regression models). An interesting correlation was found that the convenience of flight departure time was found to negatively correlate with passenger satisfaction. This however, in retrospect, may be less surprising than it originally seems owing to the presence of all other predictor variables. Another unforeseen result was the relative lack of importance regarding flight distance to passenger satisfaction, in terms of both statistical significance (highest p-value) and estimated coefficient (lowest)
 
 
 # References
 [1] Hilbe, J. (2017). Analysis of Model Fit. In Logistic regression models. Boca Raton: Routledge, Taylor &amp; Francis Group  
-[2] https://www.kaggle.com/teejmahal20/airline-passenger-satisfaction
+[2] https://www.kaggle.com/teejmahal20/airline-passenger-satisfaction  
+[3] Github for project  https://github.com/aadi350/airlinepassengersatisfaction  
+[4] Shiny Demo App https://5b8hsq-aadidev-sooknanan.shinyapps.io/DemoPassenger/
 
 
 
