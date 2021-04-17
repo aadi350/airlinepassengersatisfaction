@@ -52,7 +52,7 @@ str(df)
 ```
 
 
-Following numeric encoding, R expects variables to be of type factor for Logistic Regression to be performed, this is done next. From the output that follows, the dataframe was successfully converted into levels with no NAs introduced by coercion errors throwh
+Following numeric encoding, R expects variables to be of type factor for Logistic Regression to be performed, this is done next. From the output that follows, the dataframe was successfully converted into levels with no errors (NAs introduced by coercion) thrown
 
 ```{r}
 df_enc = df
@@ -153,7 +153,6 @@ logmodel <- glm(
 summary(logmodel)
 ```
 ### Odds Ratios
-In exploring the odds ratios below,
 ```{r}
 exp(cbind(OR = coef(logmodel), confint(logmodel)))
 ```
@@ -161,6 +160,7 @@ exp(cbind(OR = coef(logmodel), confint(logmodel)))
 ### Confidence Intervals
 The confidence intervals for the parameters at level 0.95 are found using the confint-function as shown below
 ```{r}
+qnorm(1 - 0.05/2)
 confint(logmodel, level = 0.95)
 ```
 
@@ -170,9 +170,9 @@ Since the LRT test approximately matches the Wald test when the sample size is r
 
 ### LRT with Null Model
 
-The likelihood ratio tests $H_{0}$: reduced model vs $H_{1}$: full model. Since the difference between log-likelihood statistics for two models (one of which is a special case of the other) follows an approximate $\chi^{2}$ distribution, we can find the $\chi^{2}$ test statistic for a full vs reduced (some paramters set to zero). The degrees-of-freedom are the number of parameters set to zero in the reduced model. The null hypotheses being tested, in essence, are that the subset of parameters set to zero are actually non-significant for the purposes of estimating the level of passenger satisfaction.
+The likelihood ratio tests $H_{0}$: reduced model vs $H_{1}$: full model. Since the difference between log-likelihood statistics for two models (one of which is a special case of the other) follows an approximate $\chi^{2}$ distribution, we can find the $\chi^{2}$ test statistic for a full vs reduced (some parameters set to zero). The degrees-of-freedom are the number of parameters set to zero in the reduced model. The null hypotheses being tested, in essence, are that the subset of parameters set to zero are actually non-significant for the purposes of estimating the level of passenger satisfaction.
 
-From the results of the LRT, it is shown that level of satisfaction is statistically (significantly) correlated to the attributes present in the full model, hence the null hypothesis (all attributes coefficients are zero) was disproven
+From the results of the LRT, it is shown that level of satisfaction is statistically (significantly) correlated to the attributes present in the full model, hence the null hypothesis (all attributes coefficients are zero) is rejected
 
 ```{r}
 library(lmtest)
@@ -182,7 +182,7 @@ nullmodel <-  glm(formula = satisfaction ~ 1, family = binomial, data = df_enc)
 lrtest(nullmodel, logmodel)
 ```
 ### LRT Test with Reduced Model
-From the following LRT using only the most significant parameters above. From the results below, we can see that the the p-value is near zero with the $\chi^{2}$ statistic shows that the $\beta s$ for the attributes omitted are statistically highly likely to be non-zero
+From the following LRT using only the most significant parameters above. From the results below, we can see that the the p-value is zero with the $\chi^{2}$ statistic shows that the $\beta s$ for the attributes omitted contribute significantly to the fit of the model
 ```{r}
 library(lmtest)
 
@@ -201,8 +201,6 @@ However, $R^{2}$ is not appropriate for use with the logistic model [1], since i
 
 
 ```{r}
-require(rms)
-
 ll.null <- logmodel$null.deviance/-2
 ll.proposed <- logmodel$deviance/-2
 
@@ -210,10 +208,8 @@ r_squared <- (ll.null - ll.proposed) / ll.null
 
 print(r_squared)
 ```
-Comparing fit to the reduced model above, the $R^{2}$ value was lower than that of the above,
+Comparing fit to the reduced model above, the $R^{2}$ value was lower than that of the above, implying that the fit of the reduced model was worse than the original, hence the model model is used.
 ```{r}
-require(rms)
-
 ll.null <- logmodel$null.deviance/-2
 ll.proposed <- logmodel.reduced$deviance/-2
 
@@ -238,7 +234,7 @@ model = load( 'model.RData')
 newdata = df_enc[1, ]
 predict(get(model), newdata)
 ```
-Given the above prediction, we can re-check the original dataframe, given that the above prediction was less than zero, the logistic regression model would have correctly classified the tuple into the 'not satisified/neutral' category 
+Given the above prediction, we can re-check the original dataframe, given that the above prediction was less than zero, the logistic regression model would have correctly classified the tuple into the 'not satisfied/neutral' category 
 ```{r}
 df_enc[1,ncol(df_enc)]
 ```
